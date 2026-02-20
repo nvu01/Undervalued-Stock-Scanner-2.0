@@ -124,9 +124,9 @@ Undervalued Stock Scanner\
    - Replace files inside \Downloaded CSV Files.
 3. Run processing scripts from the terminal: 
     ```
-    py -m SCRIPTS.etl.py
-    py -m SCRIPTS.exit_signal.py
-    py -m SCRIPTS.stock_snapshot.py
+    py -m SCRIPTS.etl
+    py -m SCRIPTS.exit_signal
+    py -m SCRIPTS.stock_snapshot
     ```
 4. Open `Undervalued Stock Scanner.pbix` or `Exit Signals.pbix` (update folder path parameter if needed).  
 Click **Refresh** in the **Home** tab 
