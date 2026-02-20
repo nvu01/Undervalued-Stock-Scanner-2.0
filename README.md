@@ -106,7 +106,7 @@ Undervalued Stock Scanner\
 ├── Industry Means\                    # Folder containing all industry mean calculation outputs (.xlsx files) from etl.py
 ├── Position Statement\                # Folder containing the current position statement (.csv file) downloaded from Thinkorswim
 ├── Exit Signals\                      # Folder containing exit signal output files exported from exit_signals.py
-├── Selected Stock Snapshot\           # Folder containing snapshots of selected stocks and their metrics
+├── Selected Stock Snapshot\           # Folder containing a sample snapshot of selected stocks and their metrics
 ├── SCRIPTS\                           # Package folder containing all Python scripts
 │   ├── etl.py                              # Python script for scanning undervalued stocks
 │   ├── exit_signals.py                     # Python script for exit signals detection
