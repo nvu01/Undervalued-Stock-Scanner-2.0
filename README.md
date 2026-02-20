@@ -99,8 +99,10 @@ Undervalued Stock Scanner\
 ├── Industry Means\                    # Folder containing all industry mean calculation outputs (.xlsx files) from etl.py
 ├── Position Statement\                # Folder containing the current position statement (.csv file) downloaded from Thinkorswim
 ├── Exit Signals\                      # Folder containing exit signal output files exported from exit_signals.py
-├── etl.py                                    # Python script for scanning undervalued stocks
-├── exit_signals.py                           # Python script for exit signals detection
+├── SCRIPTS\                           # Package folder containing all Python scripts
+│   ├── etl.py                                # Python script for scanning undervalued stocks
+│   ├── exit_signals.py                       # Python script for exit signals detection
+│   └── stock_snapshot.py                     # Python script that take snapshots of selected stocks and their metrics
 ├── Undervalued Stocks Scanner.pbix           # Undervalued stock valuation dashboard
 ├── Exit Signals.pbix                         # Exit monitoring dashboard
 ├── Instructions.pdf                          # User instructions
@@ -122,8 +124,9 @@ Undervalued Stock Scanner\
    - Replace files inside \Downloaded CSV Files.
 3. Run processing scripts from the terminal: 
     ```
-    py etl.py
-    py exit_signal.py
+    py -m SCRIPTS.etl.py
+    py -m SCRIPTS.exit_signal.py
+    py -m SCRIPTS.stock_snapshot.py
     ```
 4. Open `Undervalued Stock Scanner.pbix` or `Exit Signals.pbix` (update folder path parameter if needed).  
 Click **Refresh** in the **Home** tab 
