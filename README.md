@@ -9,6 +9,8 @@ The project applies structured financial screening rules combined with statistic
 
 In addition to valuation screening, the project also identifies exit signals for currently held positions to help monitor potential overvaluation or quality deterioration.
 
+Users can also generate Excel snapshots of the selected stocks and their metrics.
+
 ## Prerequisites
 
 - Python libraries in `requirements.txt`
@@ -71,7 +73,7 @@ Refer to `Exit Signals.pdf` for detailed explanation and instructions.
   - ROE < 0
   - ROA < 0
 
-## Summary of Data Pipeline
+## Summary of Data Pipelines
 
 ### Pipeline for Undervalued Stock Scanning
 1. Raw stock data is downloaded from the Thinkorswim scanner.
@@ -81,11 +83,16 @@ Refer to `Exit Signals.pdf` for detailed explanation and instructions.
    - 11 industry mean workbooks in `\Industry Means`
 3. Interactive Power BI dashboard presents data from the Excel workbooks in `\Results` and in `\Industry Means`.
 
-## Pipeline for Exit Signals
+### Pipeline for Exit Signals
 1. The position statement is downloaded from Thinkorswim and saved in `\Position Statement`.
 2. `exit_signals.py` processes the position statement and raw data from `\Downloaded CSV Files`, then applies exit signal logic and filters for stocks with at least 1 exit signal.
-The final output is a formatted Excel file saved in `\Exit Signals`.
+The final output is a formatted Excel file saved in `\Exit Signals\Scannable`.
 3. Exit Signals.pbix presents categorized red flags.
+
+### Pipeline for Stock Snapshot
+1. stock_snapshot.py retrieves fundamental metrics across sectors and market caps.
+2. User inputs a list of selected stocks.
+3. Filtered Excel output is saved in `\Selected Stock Snapshots`
 
 ## Project Folders and Files
 
@@ -100,26 +107,26 @@ Undervalued Stock Scanner\
 ├── Position Statement\                # Folder containing the current position statement (.csv file) downloaded from Thinkorswim
 ├── Exit Signals\                      # Folder containing exit signal output files exported from exit_signals.py
 ├── SCRIPTS\                           # Package folder containing all Python scripts
-│   ├── etl.py                                # Python script for scanning undervalued stocks
-│   ├── exit_signals.py                       # Python script for exit signals detection
-│   └── stock_snapshot.py                     # Python script that take snapshots of selected stocks and their metrics
-├── Undervalued Stocks Scanner.pbix           # Undervalued stock valuation dashboard
-├── Exit Signals.pbix                         # Exit monitoring dashboard
-├── Instructions.pdf                          # User instructions
-├── Conceptual Framework.pdf                  # Detailed explanation of the project's logic and methodology
-├── Exit Signal Framework.pdf                          # Exit logic documentation
-├── Draft_Undervalued Stock Scanner ETL.html  # HTML export of the Jupyter Notebook used to develop etl.py
-├── Draft_Exit Signals.html                   # HTML export of the Jupyter Notebook used to develop exit_signals.py
-├── Table Schema.xlsx                         # An outline of the structure of tables
-└── requirements.txt                          # Required Python libraries
+│   ├── etl.py                              # Python script for scanning undervalued stocks
+│   ├── exit_signals.py                     # Python script for exit signals detection
+│   └── stock_snapshot.py                   # Python script that take snapshots of selected stocks and their metrics
+├── Undervalued Stocks Scanner.pbix              # Undervalued stock valuation dashboard
+├── Exit Signals.pbix                            # Exit monitoring dashboard
+├── Instructions.pdf                             # User instructions
+├── Conceptual Framework.pdf                     # Detailed explanation of the project's logic and methodology
+├── Exit Signal Framework.pdf                    # Exit logic documentation
+├── Draft_Undervalued Stock Scanner ETL.html     # HTML export of the Jupyter Notebook used to develop etl.py
+├── Draft_Exit Signals.html                      # HTML export of the Jupyter Notebook used to develop exit_signals.py
+├── Table Schema.xlsx                            # An outline of the structure of tables
+└── requirements.txt                             # Required Python libraries
 ```
 
 ## Usage
 
-1. Download the Repository
+1. Download the repository
    - Fork the repository or download as ZIP. 
    - Extract locally to create the Undervalued Stock Scanner folder.
-2. Update Raw Data
+2. Update raw data
    - Download fresh CSV files from Thinkorswim. 
    - Replace files inside \Downloaded CSV Files.
 3. Run processing scripts from the terminal: 
