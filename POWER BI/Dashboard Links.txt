@@ -1,0 +1,7 @@
+Dashboard Links
+
+Undervalued Stock Scanner:
+https://app.fabric.microsoft.com/view?r=eyJrIjoiZjMyNWFiOTQtZTdjYy00MDExLWEzNWUtYzYxODllZDY1MGI3IiwidCI6IjEwZGVlN2UzLWJjMGQtNGNjNy1iMzZhLWEzZDQzMGEzZGI5ZCIsImMiOjZ9
+
+Exit Signals:
+https://app.fabric.microsoft.com/view?r=eyJrIjoiYzI4MWZmMGYtZTYwNy00MmNjLWI3NDUtZWRlOWM5ZGFhY2U0IiwidCI6IjEwZGVlN2UzLWJjMGQtNGNjNy1iMzZhLWEzZDQzMGEzZGI5ZCIsImMiOjZ9
