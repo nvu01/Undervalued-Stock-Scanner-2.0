@@ -19,7 +19,7 @@ full_df = pd.concat(dfs, ignore_index=True)
 full_df.drop(columns=full_df.filter(like='_std').columns, axis=1, inplace=True)  # Remove _std columns
 
 # Get a list of selected stocks from user input
-print("Paste stock symbols below and press Enter.")
+print("Paste or type stock symbols below and press Enter.")
 print("When done, press Enter again.")
 
 symbol = []
