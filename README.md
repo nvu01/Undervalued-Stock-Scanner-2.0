@@ -22,7 +22,7 @@ Users can also generate Excel snapshots of the selected stocks and their metrics
 
 For detailed methodology, refer to:
 - `Conceptual Framework.pdf`
-- `Exit Signals.pdf`
+- `Exit Signal Framework.pdf`
 
 ### Stock Fundamentals Screening
 
@@ -122,7 +122,7 @@ Undervalued Stock Scanner\
 ├── Table Schema.xlsx                            # An outline of the structure of tables
 └── requirements.txt                             # Required Python libraries
 ```
-Note: To ensure personal and financial information security, folder Position Statement\ is not uploaded in this repo. This means the exit_signals.py script can't be run.
+Note: The position statement CSV file in `Position Statement\` is masked to ensure personal and financial information security.
 
 ## Usage
 
