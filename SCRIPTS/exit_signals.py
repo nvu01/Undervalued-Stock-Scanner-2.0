@@ -73,9 +73,9 @@ def scan(df):
     - Select only stocks that have at least one signal
     '''
     # Scan for active stocks that are no longer in the scanner due to their Market Cap being out of range (250M - 2B)
-    out_of_scanner = df.loc[df['Market Cap Group'].isna(), 'Symbol']
+    out_of_scanner = df.loc[df['Current Price'].isna(), 'Symbol']
 
-    scanned_df = df.loc[~df['Market Cap Group'].isna(), :].copy()
+    scanned_df = df.loc[~df['Current Price'].isna(), :].copy()
 
     # Create "Overvaluation" column
     scanned_df['Overvaluation'] = 0
