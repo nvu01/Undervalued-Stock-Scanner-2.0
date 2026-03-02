@@ -58,7 +58,7 @@ def get_all_stock_data(all_files, metric_cols, pos):
         dfs.append(df_with_stats)
 
     full_df = pd.concat(dfs, ignore_index=True)
-    full_df.drop(columns=full_df.filter(like='_std').columns, axis=1, inplace=True)     # Remove std columns
+    full_df.drop(columns=full_df.filter(like='_std').columns, inplace=True)     # Remove std columns
 
     # Filter for current positions
     merged_df = pd.merge(pos, full_df, how='left', on='Symbol')
