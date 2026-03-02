@@ -7521,7 +7521,7 @@ a.anchor-link {
 <p>Pipeline:</p>
 <ul>
 <li>Position statement on Thinkorswim is downloaded and processed to output a list of current active stocks.</li>
-<li>This list is used to filter raw datasets of stock metrics in all sectors and market caps. The output dataset includes current active stocks and their fundamental metrics.</li>
+<li>This list is used to filter a dataset of stock metrics in all sectors and market caps. The output dataset includes current active stocks and their fundamental metrics.</li>
 <li>This dataset then goes through scanning process where exit signals are identified and only stocks with at least 1 exit signals are kept.</li>
 <li>The final output is an Excel file with conditional format to highlight different types of exit signals.</li>
 </ul>
@@ -7539,7 +7539,25 @@ a.anchor-link {
 <div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">io</span> <span class="kn">import</span> <span class="n">StringIO</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">etl_copy</span> <span class="kn">import</span> <span class="n">get_files</span><span class="p">,</span> <span class="n">data_cleaning</span><span class="p">,</span> <span class="n">get_grouped_stats</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=85f91663-7bd4-4a6f-853a-9647ed3c6c07">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [2]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Import the functions directly from etl.py</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="s2">".."</span><span class="p">))</span>
+
+<span class="kn">from</span> <span class="nn">SCRIPTS.etl</span> <span class="kn">import</span> <span class="n">get_files</span><span class="p">,</span> <span class="n">data_cleaning</span><span class="p">,</span> <span class="n">get_grouped_stats</span>
 </pre></div>
 </div>
 </div>
@@ -7583,11 +7601,11 @@ a.anchor-link {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [2]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [3]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Parse the csv file content to a list of strings with each string corresponding to a line in the file</span>
-<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">'D:/PROJECTS/Undervalued Stock Scanner V2/Position Statement/2026-02-06-PositionStatement.csv'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">'D:/PROJECTS/Undervalued Stock Scanner V2/Position Statement/2026-02-22-PositionStatement.csv'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
     <span class="n">lines</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -7599,7 +7617,7 @@ a.anchor-link {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [3]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [4]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Identify the location of the table</span>
@@ -7628,119 +7646,10 @@ a.anchor-link {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [4]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># To conceal confidential trading info, values in these columns are hidden: Trade Price, P/L Open, Qty, P/L Day, BP Effect</span>
-<span class="n">pos</span><span class="o">.</span><span class="n">head</span><span class="p">()</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">format</span><span class="p">({</span><span class="s1">'Qty'</span><span class="p">:</span> <span class="s2">""</span><span class="p">,</span> <span class="s1">'Trade Price'</span><span class="p">:</span> <span class="s2">""</span><span class="p">,</span> <span class="s1">'P/L Open'</span><span class="p">:</span> <span class="s2">""</span><span class="p">,</span> <span class="s1">'P/L Day'</span><span class="p">:</span> <span class="s2">""</span><span class="p">,</span> <span class="s1">'BP Effect'</span><span class="p">:</span> <span class="s2">""</span><span class="p">})</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[4]:</div>
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
-<style type="text/css">
-</style>
-<table id="T_1859a">
-<thead>
-<tr>
-<th class="blank level0"> </th>
-<th class="col_heading level0 col0" id="T_1859a_level0_col0">Instrument</th>
-<th class="col_heading level0 col1" id="T_1859a_level0_col1">Qty</th>
-<th class="col_heading level0 col2" id="T_1859a_level0_col2">Trade Price</th>
-<th class="col_heading level0 col3" id="T_1859a_level0_col3">Mark</th>
-<th class="col_heading level0 col4" id="T_1859a_level0_col4">Mrk Chng</th>
-<th class="col_heading level0 col5" id="T_1859a_level0_col5">3</th>
-<th class="col_heading level0 col6" id="T_1859a_level0_col6">P/L Open</th>
-<th class="col_heading level0 col7" id="T_1859a_level0_col7">P/L Day</th>
-<th class="col_heading level0 col8" id="T_1859a_level0_col8">BP Effect</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<th class="row_heading level0 row0" id="T_1859a_level0_row0">0</th>
-<td class="data row0 col0" id="T_1859a_row0_col0">ABEV</td>
-<td class="data row0 col1" id="T_1859a_row0_col1"></td>
-<td class="data row0 col2" id="T_1859a_row0_col2"></td>
-<td class="data row0 col3" id="T_1859a_row0_col3">2.925000</td>
-<td class="data row0 col4" id="T_1859a_row0_col4">0.015000</td>
-<td class="data row0 col5" id="T_1859a_row0_col5">nan</td>
-<td class="data row0 col6" id="T_1859a_row0_col6"></td>
-<td class="data row0 col7" id="T_1859a_row0_col7"></td>
-<td class="data row0 col8" id="T_1859a_row0_col8"></td>
-</tr>
-<tr>
-<th class="row_heading level0 row1" id="T_1859a_level0_row1">1</th>
-<td class="data row1 col0" id="T_1859a_row1_col0">STOCK</td>
-<td class="data row1 col1" id="T_1859a_row1_col1"></td>
-<td class="data row1 col2" id="T_1859a_row1_col2"></td>
-<td class="data row1 col3" id="T_1859a_row1_col3">2.925000</td>
-<td class="data row1 col4" id="T_1859a_row1_col4">0.015000</td>
-<td class="data row1 col5" id="T_1859a_row1_col5">nan</td>
-<td class="data row1 col6" id="T_1859a_row1_col6"></td>
-<td class="data row1 col7" id="T_1859a_row1_col7"></td>
-<td class="data row1 col8" id="T_1859a_row1_col8"></td>
-</tr>
-<tr>
-<th class="row_heading level0 row2" id="T_1859a_level0_row2">2</th>
-<td class="data row2 col0" id="T_1859a_row2_col0">AMBEV S A ADR</td>
-<td class="data row2 col1" id="T_1859a_row2_col1"></td>
-<td class="data row2 col2" id="T_1859a_row2_col2"></td>
-<td class="data row2 col3" id="T_1859a_row2_col3">2.925000</td>
-<td class="data row2 col4" id="T_1859a_row2_col4">0.015000</td>
-<td class="data row2 col5" id="T_1859a_row2_col5">nan</td>
-<td class="data row2 col6" id="T_1859a_row2_col6"></td>
-<td class="data row2 col7" id="T_1859a_row2_col7"></td>
-<td class="data row2 col8" id="T_1859a_row2_col8"></td>
-</tr>
-<tr>
-<th class="row_heading level0 row3" id="T_1859a_level0_row3">3</th>
-<td class="data row3 col0" id="T_1859a_row3_col0">STOCK</td>
-<td class="data row3 col1" id="T_1859a_row3_col1"></td>
-<td class="data row3 col2" id="T_1859a_row3_col2"></td>
-<td class="data row3 col3" id="T_1859a_row3_col3">2.925000</td>
-<td class="data row3 col4" id="T_1859a_row3_col4">0.015000</td>
-<td class="data row3 col5" id="T_1859a_row3_col5">nan</td>
-<td class="data row3 col6" id="T_1859a_row3_col6"></td>
-<td class="data row3 col7" id="T_1859a_row3_col7"></td>
-<td class="data row3 col8" id="T_1859a_row3_col8"></td>
-</tr>
-<tr>
-<th class="row_heading level0 row4" id="T_1859a_level0_row4">4</th>
-<td class="data row4 col0" id="T_1859a_row4_col0">AMBEV S A ADR</td>
-<td class="data row4 col1" id="T_1859a_row4_col1"></td>
-<td class="data row4 col2" id="T_1859a_row4_col2"></td>
-<td class="data row4 col3" id="T_1859a_row4_col3">2.925000</td>
-<td class="data row4 col4" id="T_1859a_row4_col4">0.015000</td>
-<td class="data row4 col5" id="T_1859a_row4_col5">nan</td>
-<td class="data row4 col6" id="T_1859a_row4_col6"></td>
-<td class="data row4 col7" id="T_1859a_row4_col7"></td>
-<td class="data row4 col8" id="T_1859a_row4_col8"></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=060f6eaf-e594-4903-b23b-f7e18bad0400">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
 <div class="jp-InputPrompt jp-InputArea-prompt">In [5]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Delete the NaN rows in "BP Effect"</span>
-<span class="n">pos</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s1">'BP Effect'</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">pos</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># To conceal confidential trading info, values in these columns are hidden: Trade Price, P/L Open, Qty, P/L Day, BP Effect</span>
 <span class="n">pos</span><span class="o">.</span><span class="n">head</span><span class="p">()</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">format</span><span class="p">({</span><span class="s1">'Qty'</span><span class="p">:</span> <span class="s2">""</span><span class="p">,</span> <span class="s1">'Trade Price'</span><span class="p">:</span> <span class="s2">""</span><span class="p">,</span> <span class="s1">'P/L Open'</span><span class="p">:</span> <span class="s2">""</span><span class="p">,</span> <span class="s1">'P/L Day'</span><span class="p">:</span> <span class="s2">""</span><span class="p">,</span> <span class="s1">'BP Effect'</span><span class="p">:</span> <span class="s2">""</span><span class="p">})</span>
 </pre></div>
 </div>
@@ -7756,81 +7665,81 @@ a.anchor-link {
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
 <style type="text/css">
 </style>
-<table id="T_1dc02">
+<table id="T_5df7f">
 <thead>
 <tr>
 <th class="blank level0"> </th>
-<th class="col_heading level0 col0" id="T_1dc02_level0_col0">Instrument</th>
-<th class="col_heading level0 col1" id="T_1dc02_level0_col1">Qty</th>
-<th class="col_heading level0 col2" id="T_1dc02_level0_col2">Trade Price</th>
-<th class="col_heading level0 col3" id="T_1dc02_level0_col3">Mark</th>
-<th class="col_heading level0 col4" id="T_1dc02_level0_col4">Mrk Chng</th>
-<th class="col_heading level0 col5" id="T_1dc02_level0_col5">3</th>
-<th class="col_heading level0 col6" id="T_1dc02_level0_col6">P/L Open</th>
-<th class="col_heading level0 col7" id="T_1dc02_level0_col7">P/L Day</th>
-<th class="col_heading level0 col8" id="T_1dc02_level0_col8">BP Effect</th>
+<th class="col_heading level0 col0" id="T_5df7f_level0_col0">Instrument</th>
+<th class="col_heading level0 col1" id="T_5df7f_level0_col1">Qty</th>
+<th class="col_heading level0 col2" id="T_5df7f_level0_col2">Trade Price</th>
+<th class="col_heading level0 col3" id="T_5df7f_level0_col3">Mark</th>
+<th class="col_heading level0 col4" id="T_5df7f_level0_col4">Mrk Chng</th>
+<th class="col_heading level0 col5" id="T_5df7f_level0_col5">3</th>
+<th class="col_heading level0 col6" id="T_5df7f_level0_col6">P/L Open</th>
+<th class="col_heading level0 col7" id="T_5df7f_level0_col7">P/L Day</th>
+<th class="col_heading level0 col8" id="T_5df7f_level0_col8">BP Effect</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<th class="row_heading level0 row0" id="T_1dc02_level0_row0">0</th>
-<td class="data row0 col0" id="T_1dc02_row0_col0">ABEV</td>
-<td class="data row0 col1" id="T_1dc02_row0_col1"></td>
-<td class="data row0 col2" id="T_1dc02_row0_col2"></td>
-<td class="data row0 col3" id="T_1dc02_row0_col3">2.925000</td>
-<td class="data row0 col4" id="T_1dc02_row0_col4">0.015000</td>
-<td class="data row0 col5" id="T_1dc02_row0_col5">nan</td>
-<td class="data row0 col6" id="T_1dc02_row0_col6"></td>
-<td class="data row0 col7" id="T_1dc02_row0_col7"></td>
-<td class="data row0 col8" id="T_1dc02_row0_col8"></td>
+<th class="row_heading level0 row0" id="T_5df7f_level0_row0">0</th>
+<td class="data row0 col0" id="T_5df7f_row0_col0">ABEV</td>
+<td class="data row0 col1" id="T_5df7f_row0_col1"></td>
+<td class="data row0 col2" id="T_5df7f_row0_col2"></td>
+<td class="data row0 col3" id="T_5df7f_row0_col3">3.070000</td>
+<td class="data row0 col4" id="T_5df7f_row0_col4">0.000000</td>
+<td class="data row0 col5" id="T_5df7f_row0_col5">nan</td>
+<td class="data row0 col6" id="T_5df7f_row0_col6"></td>
+<td class="data row0 col7" id="T_5df7f_row0_col7"></td>
+<td class="data row0 col8" id="T_5df7f_row0_col8"></td>
 </tr>
 <tr>
-<th class="row_heading level0 row1" id="T_1dc02_level0_row1">1</th>
-<td class="data row1 col0" id="T_1dc02_row1_col0">ACLS</td>
-<td class="data row1 col1" id="T_1dc02_row1_col1"></td>
-<td class="data row1 col2" id="T_1dc02_row1_col2"></td>
-<td class="data row1 col3" id="T_1dc02_row1_col3">87.105000</td>
-<td class="data row1 col4" id="T_1dc02_row1_col4">5.615000</td>
-<td class="data row1 col5" id="T_1dc02_row1_col5">nan</td>
-<td class="data row1 col6" id="T_1dc02_row1_col6"></td>
-<td class="data row1 col7" id="T_1dc02_row1_col7"></td>
-<td class="data row1 col8" id="T_1dc02_row1_col8"></td>
+<th class="row_heading level0 row1" id="T_5df7f_level0_row1">1</th>
+<td class="data row1 col0" id="T_5df7f_row1_col0">STOCK</td>
+<td class="data row1 col1" id="T_5df7f_row1_col1"></td>
+<td class="data row1 col2" id="T_5df7f_row1_col2"></td>
+<td class="data row1 col3" id="T_5df7f_row1_col3">3.070000</td>
+<td class="data row1 col4" id="T_5df7f_row1_col4">0.000000</td>
+<td class="data row1 col5" id="T_5df7f_row1_col5">nan</td>
+<td class="data row1 col6" id="T_5df7f_row1_col6"></td>
+<td class="data row1 col7" id="T_5df7f_row1_col7"></td>
+<td class="data row1 col8" id="T_5df7f_row1_col8"></td>
 </tr>
 <tr>
-<th class="row_heading level0 row2" id="T_1dc02_level0_row2">2</th>
-<td class="data row2 col0" id="T_1dc02_row2_col0">ACN</td>
-<td class="data row2 col1" id="T_1dc02_row2_col1"></td>
-<td class="data row2 col2" id="T_1dc02_row2_col2"></td>
-<td class="data row2 col3" id="T_1dc02_row2_col3">239.695000</td>
-<td class="data row2 col4" id="T_1dc02_row2_col4">6.115000</td>
-<td class="data row2 col5" id="T_1dc02_row2_col5">nan</td>
-<td class="data row2 col6" id="T_1dc02_row2_col6"></td>
-<td class="data row2 col7" id="T_1dc02_row2_col7"></td>
-<td class="data row2 col8" id="T_1dc02_row2_col8"></td>
+<th class="row_heading level0 row2" id="T_5df7f_level0_row2">2</th>
+<td class="data row2 col0" id="T_5df7f_row2_col0">AMBEV S A ADR</td>
+<td class="data row2 col1" id="T_5df7f_row2_col1"></td>
+<td class="data row2 col2" id="T_5df7f_row2_col2"></td>
+<td class="data row2 col3" id="T_5df7f_row2_col3">3.070000</td>
+<td class="data row2 col4" id="T_5df7f_row2_col4">0.000000</td>
+<td class="data row2 col5" id="T_5df7f_row2_col5">nan</td>
+<td class="data row2 col6" id="T_5df7f_row2_col6"></td>
+<td class="data row2 col7" id="T_5df7f_row2_col7"></td>
+<td class="data row2 col8" id="T_5df7f_row2_col8"></td>
 </tr>
 <tr>
-<th class="row_heading level0 row3" id="T_1dc02_level0_row3">3</th>
-<td class="data row3 col0" id="T_1dc02_row3_col0">AEO</td>
-<td class="data row3 col1" id="T_1dc02_row3_col1"></td>
-<td class="data row3 col2" id="T_1dc02_row3_col2"></td>
-<td class="data row3 col3" id="T_1dc02_row3_col3">23.935000</td>
-<td class="data row3 col4" id="T_1dc02_row3_col4">0.845000</td>
-<td class="data row3 col5" id="T_1dc02_row3_col5">nan</td>
-<td class="data row3 col6" id="T_1dc02_row3_col6"></td>
-<td class="data row3 col7" id="T_1dc02_row3_col7"></td>
-<td class="data row3 col8" id="T_1dc02_row3_col8"></td>
+<th class="row_heading level0 row3" id="T_5df7f_level0_row3">3</th>
+<td class="data row3 col0" id="T_5df7f_row3_col0">STOCK</td>
+<td class="data row3 col1" id="T_5df7f_row3_col1"></td>
+<td class="data row3 col2" id="T_5df7f_row3_col2"></td>
+<td class="data row3 col3" id="T_5df7f_row3_col3">3.070000</td>
+<td class="data row3 col4" id="T_5df7f_row3_col4">0.000000</td>
+<td class="data row3 col5" id="T_5df7f_row3_col5">nan</td>
+<td class="data row3 col6" id="T_5df7f_row3_col6"></td>
+<td class="data row3 col7" id="T_5df7f_row3_col7"></td>
+<td class="data row3 col8" id="T_5df7f_row3_col8"></td>
 </tr>
 <tr>
-<th class="row_heading level0 row4" id="T_1dc02_level0_row4">4</th>
-<td class="data row4 col0" id="T_1dc02_row4_col0">AMTD</td>
-<td class="data row4 col1" id="T_1dc02_row4_col1"></td>
-<td class="data row4 col2" id="T_1dc02_row4_col2"></td>
-<td class="data row4 col3" id="T_1dc02_row4_col3">0.999800</td>
-<td class="data row4 col4" id="T_1dc02_row4_col4">0.009900</td>
-<td class="data row4 col5" id="T_1dc02_row4_col5">nan</td>
-<td class="data row4 col6" id="T_1dc02_row4_col6"></td>
-<td class="data row4 col7" id="T_1dc02_row4_col7"></td>
-<td class="data row4 col8" id="T_1dc02_row4_col8"></td>
+<th class="row_heading level0 row4" id="T_5df7f_level0_row4">4</th>
+<td class="data row4 col0" id="T_5df7f_row4_col0">AMBEV S A ADR</td>
+<td class="data row4 col1" id="T_5df7f_row4_col1"></td>
+<td class="data row4 col2" id="T_5df7f_row4_col2"></td>
+<td class="data row4 col3" id="T_5df7f_row4_col3">3.070000</td>
+<td class="data row4 col4" id="T_5df7f_row4_col4">0.000000</td>
+<td class="data row4 col5" id="T_5df7f_row4_col5">nan</td>
+<td class="data row4 col6" id="T_5df7f_row4_col6"></td>
+<td class="data row4 col7" id="T_5df7f_row4_col7"></td>
+<td class="data row4 col8" id="T_5df7f_row4_col8"></td>
 </tr>
 </tbody>
 </table>
@@ -7838,7 +7747,7 @@ a.anchor-link {
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=6e0574aa-9f4a-44f5-9244-e739ff2884bf">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=060f6eaf-e594-4903-b23b-f7e18bad0400">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7865,81 +7774,190 @@ a.anchor-link {
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
 <style type="text/css">
 </style>
-<table id="T_222c3">
+<table id="T_8e1e4">
 <thead>
 <tr>
 <th class="blank level0"> </th>
-<th class="col_heading level0 col0" id="T_222c3_level0_col0">Instrument</th>
-<th class="col_heading level0 col1" id="T_222c3_level0_col1">Qty</th>
-<th class="col_heading level0 col2" id="T_222c3_level0_col2">Trade Price</th>
-<th class="col_heading level0 col3" id="T_222c3_level0_col3">Mark</th>
-<th class="col_heading level0 col4" id="T_222c3_level0_col4">Mrk Chng</th>
-<th class="col_heading level0 col5" id="T_222c3_level0_col5">3</th>
-<th class="col_heading level0 col6" id="T_222c3_level0_col6">P/L Open</th>
-<th class="col_heading level0 col7" id="T_222c3_level0_col7">P/L Day</th>
-<th class="col_heading level0 col8" id="T_222c3_level0_col8">BP Effect</th>
+<th class="col_heading level0 col0" id="T_8e1e4_level0_col0">Instrument</th>
+<th class="col_heading level0 col1" id="T_8e1e4_level0_col1">Qty</th>
+<th class="col_heading level0 col2" id="T_8e1e4_level0_col2">Trade Price</th>
+<th class="col_heading level0 col3" id="T_8e1e4_level0_col3">Mark</th>
+<th class="col_heading level0 col4" id="T_8e1e4_level0_col4">Mrk Chng</th>
+<th class="col_heading level0 col5" id="T_8e1e4_level0_col5">3</th>
+<th class="col_heading level0 col6" id="T_8e1e4_level0_col6">P/L Open</th>
+<th class="col_heading level0 col7" id="T_8e1e4_level0_col7">P/L Day</th>
+<th class="col_heading level0 col8" id="T_8e1e4_level0_col8">BP Effect</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<th class="row_heading level0 row0" id="T_222c3_level0_row0">0</th>
-<td class="data row0 col0" id="T_222c3_row0_col0">ABEV</td>
-<td class="data row0 col1" id="T_222c3_row0_col1"></td>
-<td class="data row0 col2" id="T_222c3_row0_col2"></td>
-<td class="data row0 col3" id="T_222c3_row0_col3">2.925000</td>
-<td class="data row0 col4" id="T_222c3_row0_col4">0.015000</td>
-<td class="data row0 col5" id="T_222c3_row0_col5">nan</td>
-<td class="data row0 col6" id="T_222c3_row0_col6"></td>
-<td class="data row0 col7" id="T_222c3_row0_col7"></td>
-<td class="data row0 col8" id="T_222c3_row0_col8"></td>
+<th class="row_heading level0 row0" id="T_8e1e4_level0_row0">0</th>
+<td class="data row0 col0" id="T_8e1e4_row0_col0">ABEV</td>
+<td class="data row0 col1" id="T_8e1e4_row0_col1"></td>
+<td class="data row0 col2" id="T_8e1e4_row0_col2"></td>
+<td class="data row0 col3" id="T_8e1e4_row0_col3">3.070000</td>
+<td class="data row0 col4" id="T_8e1e4_row0_col4">0.000000</td>
+<td class="data row0 col5" id="T_8e1e4_row0_col5">nan</td>
+<td class="data row0 col6" id="T_8e1e4_row0_col6"></td>
+<td class="data row0 col7" id="T_8e1e4_row0_col7"></td>
+<td class="data row0 col8" id="T_8e1e4_row0_col8"></td>
 </tr>
 <tr>
-<th class="row_heading level0 row1" id="T_222c3_level0_row1">1</th>
-<td class="data row1 col0" id="T_222c3_row1_col0">ACLS</td>
-<td class="data row1 col1" id="T_222c3_row1_col1"></td>
-<td class="data row1 col2" id="T_222c3_row1_col2"></td>
-<td class="data row1 col3" id="T_222c3_row1_col3">87.105000</td>
-<td class="data row1 col4" id="T_222c3_row1_col4">5.615000</td>
-<td class="data row1 col5" id="T_222c3_row1_col5">nan</td>
-<td class="data row1 col6" id="T_222c3_row1_col6"></td>
-<td class="data row1 col7" id="T_222c3_row1_col7"></td>
-<td class="data row1 col8" id="T_222c3_row1_col8"></td>
+<th class="row_heading level0 row1" id="T_8e1e4_level0_row1">1</th>
+<td class="data row1 col0" id="T_8e1e4_row1_col0">ACLS</td>
+<td class="data row1 col1" id="T_8e1e4_row1_col1"></td>
+<td class="data row1 col2" id="T_8e1e4_row1_col2"></td>
+<td class="data row1 col3" id="T_8e1e4_row1_col3">80.160000</td>
+<td class="data row1 col4" id="T_8e1e4_row1_col4">0.000000</td>
+<td class="data row1 col5" id="T_8e1e4_row1_col5">nan</td>
+<td class="data row1 col6" id="T_8e1e4_row1_col6"></td>
+<td class="data row1 col7" id="T_8e1e4_row1_col7"></td>
+<td class="data row1 col8" id="T_8e1e4_row1_col8"></td>
 </tr>
 <tr>
-<th class="row_heading level0 row2" id="T_222c3_level0_row2">2</th>
-<td class="data row2 col0" id="T_222c3_row2_col0">ACN</td>
-<td class="data row2 col1" id="T_222c3_row2_col1"></td>
-<td class="data row2 col2" id="T_222c3_row2_col2"></td>
-<td class="data row2 col3" id="T_222c3_row2_col3">239.695000</td>
-<td class="data row2 col4" id="T_222c3_row2_col4">6.115000</td>
-<td class="data row2 col5" id="T_222c3_row2_col5">nan</td>
-<td class="data row2 col6" id="T_222c3_row2_col6"></td>
-<td class="data row2 col7" id="T_222c3_row2_col7"></td>
-<td class="data row2 col8" id="T_222c3_row2_col8"></td>
+<th class="row_heading level0 row2" id="T_8e1e4_level0_row2">2</th>
+<td class="data row2 col0" id="T_8e1e4_row2_col0">ACN</td>
+<td class="data row2 col1" id="T_8e1e4_row2_col1"></td>
+<td class="data row2 col2" id="T_8e1e4_row2_col2"></td>
+<td class="data row2 col3" id="T_8e1e4_row2_col3">215.350000</td>
+<td class="data row2 col4" id="T_8e1e4_row2_col4">0.000000</td>
+<td class="data row2 col5" id="T_8e1e4_row2_col5">nan</td>
+<td class="data row2 col6" id="T_8e1e4_row2_col6"></td>
+<td class="data row2 col7" id="T_8e1e4_row2_col7"></td>
+<td class="data row2 col8" id="T_8e1e4_row2_col8"></td>
 </tr>
 <tr>
-<th class="row_heading level0 row3" id="T_222c3_level0_row3">3</th>
-<td class="data row3 col0" id="T_222c3_row3_col0">AEO</td>
-<td class="data row3 col1" id="T_222c3_row3_col1"></td>
-<td class="data row3 col2" id="T_222c3_row3_col2"></td>
-<td class="data row3 col3" id="T_222c3_row3_col3">23.935000</td>
-<td class="data row3 col4" id="T_222c3_row3_col4">0.845000</td>
-<td class="data row3 col5" id="T_222c3_row3_col5">nan</td>
-<td class="data row3 col6" id="T_222c3_row3_col6"></td>
-<td class="data row3 col7" id="T_222c3_row3_col7"></td>
-<td class="data row3 col8" id="T_222c3_row3_col8"></td>
+<th class="row_heading level0 row3" id="T_8e1e4_level0_row3">3</th>
+<td class="data row3 col0" id="T_8e1e4_row3_col0">AEO</td>
+<td class="data row3 col1" id="T_8e1e4_row3_col1"></td>
+<td class="data row3 col2" id="T_8e1e4_row3_col2"></td>
+<td class="data row3 col3" id="T_8e1e4_row3_col3">25.260000</td>
+<td class="data row3 col4" id="T_8e1e4_row3_col4">0.000000</td>
+<td class="data row3 col5" id="T_8e1e4_row3_col5">nan</td>
+<td class="data row3 col6" id="T_8e1e4_row3_col6"></td>
+<td class="data row3 col7" id="T_8e1e4_row3_col7"></td>
+<td class="data row3 col8" id="T_8e1e4_row3_col8"></td>
 </tr>
 <tr>
-<th class="row_heading level0 row4" id="T_222c3_level0_row4">4</th>
-<td class="data row4 col0" id="T_222c3_row4_col0">AMTD</td>
-<td class="data row4 col1" id="T_222c3_row4_col1"></td>
-<td class="data row4 col2" id="T_222c3_row4_col2"></td>
-<td class="data row4 col3" id="T_222c3_row4_col3">0.999800</td>
-<td class="data row4 col4" id="T_222c3_row4_col4">0.009900</td>
-<td class="data row4 col5" id="T_222c3_row4_col5">nan</td>
-<td class="data row4 col6" id="T_222c3_row4_col6"></td>
-<td class="data row4 col7" id="T_222c3_row4_col7"></td>
-<td class="data row4 col8" id="T_222c3_row4_col8"></td>
+<th class="row_heading level0 row4" id="T_8e1e4_level0_row4">4</th>
+<td class="data row4 col0" id="T_8e1e4_row4_col0">AMTD</td>
+<td class="data row4 col1" id="T_8e1e4_row4_col1"></td>
+<td class="data row4 col2" id="T_8e1e4_row4_col2"></td>
+<td class="data row4 col3" id="T_8e1e4_row4_col3">1.000000</td>
+<td class="data row4 col4" id="T_8e1e4_row4_col4">0.000000</td>
+<td class="data row4 col5" id="T_8e1e4_row4_col5">nan</td>
+<td class="data row4 col6" id="T_8e1e4_row4_col6"></td>
+<td class="data row4 col7" id="T_8e1e4_row4_col7"></td>
+<td class="data row4 col8" id="T_8e1e4_row4_col8"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=6e0574aa-9f4a-44f5-9244-e739ff2884bf">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [7]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Delete the NaN rows in "BP Effect"</span>
+<span class="n">pos</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s1">'BP Effect'</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">pos</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">pos</span><span class="o">.</span><span class="n">head</span><span class="p">()</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">format</span><span class="p">({</span><span class="s1">'Qty'</span><span class="p">:</span> <span class="s2">""</span><span class="p">,</span> <span class="s1">'Trade Price'</span><span class="p">:</span> <span class="s2">""</span><span class="p">,</span> <span class="s1">'P/L Open'</span><span class="p">:</span> <span class="s2">""</span><span class="p">,</span> <span class="s1">'P/L Day'</span><span class="p">:</span> <span class="s2">""</span><span class="p">,</span> <span class="s1">'BP Effect'</span><span class="p">:</span> <span class="s2">""</span><span class="p">})</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child jp-OutputArea-executeResult">
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[7]:</div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
+<style type="text/css">
+</style>
+<table id="T_3a10a">
+<thead>
+<tr>
+<th class="blank level0"> </th>
+<th class="col_heading level0 col0" id="T_3a10a_level0_col0">Instrument</th>
+<th class="col_heading level0 col1" id="T_3a10a_level0_col1">Qty</th>
+<th class="col_heading level0 col2" id="T_3a10a_level0_col2">Trade Price</th>
+<th class="col_heading level0 col3" id="T_3a10a_level0_col3">Mark</th>
+<th class="col_heading level0 col4" id="T_3a10a_level0_col4">Mrk Chng</th>
+<th class="col_heading level0 col5" id="T_3a10a_level0_col5">3</th>
+<th class="col_heading level0 col6" id="T_3a10a_level0_col6">P/L Open</th>
+<th class="col_heading level0 col7" id="T_3a10a_level0_col7">P/L Day</th>
+<th class="col_heading level0 col8" id="T_3a10a_level0_col8">BP Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th class="row_heading level0 row0" id="T_3a10a_level0_row0">0</th>
+<td class="data row0 col0" id="T_3a10a_row0_col0">ABEV</td>
+<td class="data row0 col1" id="T_3a10a_row0_col1"></td>
+<td class="data row0 col2" id="T_3a10a_row0_col2"></td>
+<td class="data row0 col3" id="T_3a10a_row0_col3">3.070000</td>
+<td class="data row0 col4" id="T_3a10a_row0_col4">0.000000</td>
+<td class="data row0 col5" id="T_3a10a_row0_col5">nan</td>
+<td class="data row0 col6" id="T_3a10a_row0_col6"></td>
+<td class="data row0 col7" id="T_3a10a_row0_col7"></td>
+<td class="data row0 col8" id="T_3a10a_row0_col8"></td>
+</tr>
+<tr>
+<th class="row_heading level0 row1" id="T_3a10a_level0_row1">1</th>
+<td class="data row1 col0" id="T_3a10a_row1_col0">ACLS</td>
+<td class="data row1 col1" id="T_3a10a_row1_col1"></td>
+<td class="data row1 col2" id="T_3a10a_row1_col2"></td>
+<td class="data row1 col3" id="T_3a10a_row1_col3">80.160000</td>
+<td class="data row1 col4" id="T_3a10a_row1_col4">0.000000</td>
+<td class="data row1 col5" id="T_3a10a_row1_col5">nan</td>
+<td class="data row1 col6" id="T_3a10a_row1_col6"></td>
+<td class="data row1 col7" id="T_3a10a_row1_col7"></td>
+<td class="data row1 col8" id="T_3a10a_row1_col8"></td>
+</tr>
+<tr>
+<th class="row_heading level0 row2" id="T_3a10a_level0_row2">2</th>
+<td class="data row2 col0" id="T_3a10a_row2_col0">ACN</td>
+<td class="data row2 col1" id="T_3a10a_row2_col1"></td>
+<td class="data row2 col2" id="T_3a10a_row2_col2"></td>
+<td class="data row2 col3" id="T_3a10a_row2_col3">215.350000</td>
+<td class="data row2 col4" id="T_3a10a_row2_col4">0.000000</td>
+<td class="data row2 col5" id="T_3a10a_row2_col5">nan</td>
+<td class="data row2 col6" id="T_3a10a_row2_col6"></td>
+<td class="data row2 col7" id="T_3a10a_row2_col7"></td>
+<td class="data row2 col8" id="T_3a10a_row2_col8"></td>
+</tr>
+<tr>
+<th class="row_heading level0 row3" id="T_3a10a_level0_row3">3</th>
+<td class="data row3 col0" id="T_3a10a_row3_col0">AEO</td>
+<td class="data row3 col1" id="T_3a10a_row3_col1"></td>
+<td class="data row3 col2" id="T_3a10a_row3_col2"></td>
+<td class="data row3 col3" id="T_3a10a_row3_col3">25.260000</td>
+<td class="data row3 col4" id="T_3a10a_row3_col4">0.000000</td>
+<td class="data row3 col5" id="T_3a10a_row3_col5">nan</td>
+<td class="data row3 col6" id="T_3a10a_row3_col6"></td>
+<td class="data row3 col7" id="T_3a10a_row3_col7"></td>
+<td class="data row3 col8" id="T_3a10a_row3_col8"></td>
+</tr>
+<tr>
+<th class="row_heading level0 row4" id="T_3a10a_level0_row4">4</th>
+<td class="data row4 col0" id="T_3a10a_row4_col0">AMTD</td>
+<td class="data row4 col1" id="T_3a10a_row4_col1"></td>
+<td class="data row4 col2" id="T_3a10a_row4_col2"></td>
+<td class="data row4 col3" id="T_3a10a_row4_col3">1.000000</td>
+<td class="data row4 col4" id="T_3a10a_row4_col4">0.000000</td>
+<td class="data row4 col5" id="T_3a10a_row4_col5">nan</td>
+<td class="data row4 col6" id="T_3a10a_row4_col6"></td>
+<td class="data row4 col7" id="T_3a10a_row4_col7"></td>
+<td class="data row4 col8" id="T_3a10a_row4_col8"></td>
 </tr>
 </tbody>
 </table>
@@ -7952,7 +7970,7 @@ a.anchor-link {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [7]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [8]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Keep only the important columns</span>
@@ -7969,49 +7987,49 @@ a.anchor-link {
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[7]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[8]:</div>
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
 <style type="text/css">
 </style>
-<table id="T_2e519">
+<table id="T_2d3a7">
 <thead>
 <tr>
 <th class="blank level0"> </th>
-<th class="col_heading level0 col0" id="T_2e519_level0_col0">Instrument</th>
-<th class="col_heading level0 col1" id="T_2e519_level0_col1">Qty</th>
-<th class="col_heading level0 col2" id="T_2e519_level0_col2">Trade Price</th>
+<th class="col_heading level0 col0" id="T_2d3a7_level0_col0">Instrument</th>
+<th class="col_heading level0 col1" id="T_2d3a7_level0_col1">Qty</th>
+<th class="col_heading level0 col2" id="T_2d3a7_level0_col2">Trade Price</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<th class="row_heading level0 row0" id="T_2e519_level0_row0">0</th>
-<td class="data row0 col0" id="T_2e519_row0_col0">ABEV</td>
-<td class="data row0 col1" id="T_2e519_row0_col1"></td>
-<td class="data row0 col2" id="T_2e519_row0_col2"></td>
+<th class="row_heading level0 row0" id="T_2d3a7_level0_row0">0</th>
+<td class="data row0 col0" id="T_2d3a7_row0_col0">ABEV</td>
+<td class="data row0 col1" id="T_2d3a7_row0_col1"></td>
+<td class="data row0 col2" id="T_2d3a7_row0_col2"></td>
 </tr>
 <tr>
-<th class="row_heading level0 row1" id="T_2e519_level0_row1">1</th>
-<td class="data row1 col0" id="T_2e519_row1_col0">ACLS</td>
-<td class="data row1 col1" id="T_2e519_row1_col1"></td>
-<td class="data row1 col2" id="T_2e519_row1_col2"></td>
+<th class="row_heading level0 row1" id="T_2d3a7_level0_row1">1</th>
+<td class="data row1 col0" id="T_2d3a7_row1_col0">ACLS</td>
+<td class="data row1 col1" id="T_2d3a7_row1_col1"></td>
+<td class="data row1 col2" id="T_2d3a7_row1_col2"></td>
 </tr>
 <tr>
-<th class="row_heading level0 row2" id="T_2e519_level0_row2">2</th>
-<td class="data row2 col0" id="T_2e519_row2_col0">ACN</td>
-<td class="data row2 col1" id="T_2e519_row2_col1"></td>
-<td class="data row2 col2" id="T_2e519_row2_col2"></td>
+<th class="row_heading level0 row2" id="T_2d3a7_level0_row2">2</th>
+<td class="data row2 col0" id="T_2d3a7_row2_col0">ACN</td>
+<td class="data row2 col1" id="T_2d3a7_row2_col1"></td>
+<td class="data row2 col2" id="T_2d3a7_row2_col2"></td>
 </tr>
 <tr>
-<th class="row_heading level0 row3" id="T_2e519_level0_row3">3</th>
-<td class="data row3 col0" id="T_2e519_row3_col0">AEO</td>
-<td class="data row3 col1" id="T_2e519_row3_col1"></td>
-<td class="data row3 col2" id="T_2e519_row3_col2"></td>
+<th class="row_heading level0 row3" id="T_2d3a7_level0_row3">3</th>
+<td class="data row3 col0" id="T_2d3a7_row3_col0">AEO</td>
+<td class="data row3 col1" id="T_2d3a7_row3_col1"></td>
+<td class="data row3 col2" id="T_2d3a7_row3_col2"></td>
 </tr>
 <tr>
-<th class="row_heading level0 row4" id="T_2e519_level0_row4">4</th>
-<td class="data row4 col0" id="T_2e519_row4_col0">AMTD</td>
-<td class="data row4 col1" id="T_2e519_row4_col1"></td>
-<td class="data row4 col2" id="T_2e519_row4_col2"></td>
+<th class="row_heading level0 row4" id="T_2d3a7_level0_row4">4</th>
+<td class="data row4 col0" id="T_2d3a7_row4_col0">AMTD</td>
+<td class="data row4 col1" id="T_2d3a7_row4_col1"></td>
+<td class="data row4 col2" id="T_2d3a7_row4_col2"></td>
 </tr>
 </tbody>
 </table>
@@ -8024,7 +8042,7 @@ a.anchor-link {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [8]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [9]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Change column name to make it consistent with other tables for later use</span>
@@ -8039,7 +8057,7 @@ a.anchor-link {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [9]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [10]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">pos</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
@@ -8053,7 +8071,7 @@ a.anchor-link {
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[9]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[10]:</div>
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
 <div>
 <style scoped="">
@@ -8121,7 +8139,7 @@ a.anchor-link {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [10]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [11]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Add some test data</span>
@@ -8140,7 +8158,7 @@ a.anchor-link {
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[10]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[11]:</div>
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
 <div>
 <style scoped="">
@@ -8167,31 +8185,31 @@ a.anchor-link {
 </thead>
 <tbody>
 <tr>
-<th>62</th>
+<th>58</th>
 <td>BAC</td>
 <td>NaN</td>
 <td>NaN</td>
 </tr>
 <tr>
-<th>63</th>
+<th>59</th>
 <td>NVDA</td>
 <td>NaN</td>
 <td>NaN</td>
 </tr>
 <tr>
-<th>64</th>
+<th>60</th>
 <td>WMT</td>
 <td>NaN</td>
 <td>NaN</td>
 </tr>
 <tr>
-<th>65</th>
+<th>61</th>
 <td>AAT</td>
 <td>NaN</td>
 <td>NaN</td>
 </tr>
 <tr>
-<th>66</th>
+<th>62</th>
 <td>O</td>
 <td>NaN</td>
 <td>NaN</td>
@@ -8219,13 +8237,13 @@ a.anchor-link {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [11]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [12]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">metric_cols</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'P/FCF'</span><span class="p">,</span> <span class="s1">'P/B'</span><span class="p">,</span> <span class="s1">'ROE'</span><span class="p">,</span> <span class="s1">'ROA'</span><span class="p">,</span> <span class="s1">'A/E'</span><span class="p">,</span> <span class="s1">'P/E'</span><span class="p">]</span>
 <span class="n">dfs</span> <span class="o">=</span> <span class="p">[]</span>
 
-<span class="n">all_files</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">get_files</span><span class="p">()</span>
+<span class="n">all_files</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">get_files</span><span class="p">()</span>
 
 <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">all_files</span><span class="p">:</span>
     <span class="n">df</span> <span class="o">=</span> <span class="n">data_cleaning</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
@@ -8244,7 +8262,7 @@ a.anchor-link {
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[11]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[12]:</div>
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
 <div>
 <style scoped="">
@@ -8294,23 +8312,23 @@ a.anchor-link {
 <td>Wireless Telecommunication Services</td>
 <td>AD</td>
 <td>Array Digital Infrastructure, Inc.</td>
-<td>4231</td>
-<td>48.98</td>
-<td>-163.266667</td>
-<td>1.672243</td>
+<td>4348</td>
+<td>50.34</td>
+<td>-167.800000</td>
+<td>1.718675</td>
 <td>5.3361</td>
 <td>1.4260</td>
 <td>...</td>
 <td>19.370883</td>
 <td>5.566367</td>
 <td>3.292833</td>
-<td>21.069352</td>
-<td>18.521170</td>
-<td>0.434233</td>
+<td>21.644055</td>
+<td>18.576304</td>
+<td>0.449363</td>
 <td>15.994249</td>
 <td>3.474796</td>
 <td>1.830999</td>
-<td>13.444549</td>
+<td>13.807819</td>
 </tr>
 <tr>
 <th>1</th>
@@ -8318,23 +8336,23 @@ a.anchor-link {
 <td>Entertainment</td>
 <td>AMC</td>
 <td>AMC Entertainment Holdings, Inc.</td>
-<td>683</td>
-<td>1.33</td>
-<td>-1.985075</td>
-<td>-0.383285</td>
+<td>627</td>
+<td>1.22</td>
+<td>-1.820896</td>
+<td>-0.351585</td>
 <td>36.9990</td>
 <td>0.4703</td>
 <td>...</td>
-<td>8.291220</td>
-<td>2.296658</td>
-<td>1.625900</td>
-<td>-4.533301</td>
-<td>13.401948</td>
-<td>0.667100</td>
-<td>12.095203</td>
-<td>3.547796</td>
-<td>2.647261</td>
-<td>26.119141</td>
+<td>9.992800</td>
+<td>3.162925</td>
+<td>1.512909</td>
+<td>-8.891510</td>
+<td>11.234340</td>
+<td>1.258427</td>
+<td>15.357871</td>
+<td>5.271198</td>
+<td>2.750757</td>
+<td>18.955252</td>
 </tr>
 <tr>
 <th>2</th>
@@ -8342,23 +8360,23 @@ a.anchor-link {
 <td>Media</td>
 <td>AMCX</td>
 <td>AMC Networks Inc.</td>
-<td>334</td>
-<td>7.68</td>
-<td>1.271523</td>
-<td>0.316962</td>
-<td>-10.8660</td>
-<td>4.2778</td>
+<td>368</td>
+<td>8.62</td>
+<td>1.406199</td>
+<td>0.374946</td>
+<td>10.4170</td>
+<td>3.8805</td>
 <td>...</td>
-<td>1.657859</td>
-<td>2.770048</td>
-<td>2.723130</td>
-<td>1.318055</td>
-<td>9.478833</td>
-<td>1.195308</td>
-<td>12.905210</td>
-<td>2.291236</td>
-<td>1.686762</td>
-<td>16.382008</td>
+<td>5.095919</td>
+<td>2.803984</td>
+<td>2.726687</td>
+<td>0.013902</td>
+<td>9.485181</td>
+<td>1.180531</td>
+<td>8.722492</td>
+<td>2.267321</td>
+<td>1.685940</td>
+<td>18.775389</td>
 </tr>
 <tr>
 <th>3</th>
@@ -8366,23 +8384,23 @@ a.anchor-link {
 <td>Wireless Telecommunication Services</td>
 <td>AMX</td>
 <td>AmÃ©rica MÃ³vil, S.A.B. de C.V.</td>
-<td>67708</td>
-<td>22.48</td>
-<td>172.923077</td>
-<td>64.228571</td>
-<td>15.7230</td>
-<td>6.1059</td>
+<td>71712</td>
+<td>23.81</td>
+<td>183.153846</td>
+<td>61.051282</td>
+<td>20.4960</td>
+<td>6.6579</td>
 <td>...</td>
-<td>21.089737</td>
-<td>5.320425</td>
-<td>3.628325</td>
-<td>25.738668</td>
-<td>12.375073</td>
-<td>4.273705</td>
-<td>16.652452</td>
-<td>2.440694</td>
-<td>1.046820</td>
-<td>25.688728</td>
+<td>18.170986</td>
+<td>4.839357</td>
+<td>3.561271</td>
+<td>26.312747</td>
+<td>13.934957</td>
+<td>4.449694</td>
+<td>14.442474</td>
+<td>2.124071</td>
+<td>1.054942</td>
+<td>26.851492</td>
 </tr>
 <tr>
 <th>4</th>
@@ -8390,23 +8408,23 @@ a.anchor-link {
 <td>Interactive Media &amp; Services</td>
 <td>ANGI</td>
 <td>Angi Inc.</td>
-<td>516</td>
-<td>11.96</td>
-<td>9.343750</td>
-<td>0.525714</td>
-<td>3.4233</td>
-<td>2.1376</td>
+<td>324</td>
+<td>8.08</td>
+<td>8.080000</td>
+<td>0.349330</td>
+<td>4.4048</td>
+<td>2.7838</td>
 <td>...</td>
-<td>3.103894</td>
-<td>4.294181</td>
-<td>1.693500</td>
-<td>7.991114</td>
-<td>1.867435</td>
-<td>0.751821</td>
-<td>16.837563</td>
-<td>5.104433</td>
-<td>0.545327</td>
-<td>10.911735</td>
+<td>2.604111</td>
+<td>1.994806</td>
+<td>1.668063</td>
+<td>7.360424</td>
+<td>3.359956</td>
+<td>0.664686</td>
+<td>12.094631</td>
+<td>5.261671</td>
+<td>0.542839</td>
+<td>11.672570</td>
 </tr>
 </tbody>
 </table>
@@ -8421,11 +8439,11 @@ a.anchor-link {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [12]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [13]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Remove _std columns</span>
-<span class="n">full_df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">full_df</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">like</span><span class="o">=</span><span class="s1">'_std'</span><span class="p">)</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">full_df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">full_df</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">like</span><span class="o">=</span><span class="s1">'_std'</span><span class="p">)</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -8436,7 +8454,7 @@ a.anchor-link {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [13]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [14]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">full_df</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
@@ -8452,31 +8470,31 @@ a.anchor-link {
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>&lt;class 'pandas.core.frame.DataFrame'&gt;
-RangeIndex: 3530 entries, 0 to 3529
+<pre>&lt;class 'pandas.DataFrame'&gt;
+RangeIndex: 3337 entries, 0 to 3336
 Data columns (total 18 columns):
  #   Column            Non-Null Count  Dtype  
 ---  ------            --------------  -----  
- 0   Market Cap Group  3530 non-null   object 
- 1   Industry          3530 non-null   object 
- 2   Symbol            3530 non-null   object 
- 3   Company Name      3530 non-null   object 
- 4   Market Cap (M)    3530 non-null   int64  
- 5   Current Price     3530 non-null   float64
- 6   P/FCF             3476 non-null   float64
- 7   P/B               3498 non-null   float64
- 8   ROE               3525 non-null   float64
- 9   ROA               3525 non-null   float64
- 10  A/E               3530 non-null   float64
- 11  P/E               3487 non-null   float64
- 12  P/FCF_mean        3530 non-null   float64
- 13  P/B_mean          3530 non-null   float64
- 14  ROE_mean          3530 non-null   float64
- 15  ROA_mean          3530 non-null   float64
- 16  A/E_mean          3530 non-null   float64
- 17  P/E_mean          3530 non-null   float64
-dtypes: float64(13), int64(1), object(4)
-memory usage: 496.5+ KB
+ 0   Market Cap Group  3337 non-null   str    
+ 1   Industry          3337 non-null   str    
+ 2   Symbol            3337 non-null   str    
+ 3   Company Name      3337 non-null   str    
+ 4   Market Cap (M)    3337 non-null   int64  
+ 5   Current Price     3337 non-null   float64
+ 6   P/FCF             3316 non-null   float64
+ 7   P/B               3333 non-null   float64
+ 8   ROE               3332 non-null   float64
+ 9   ROA               3332 non-null   float64
+ 10  A/E               3335 non-null   float64
+ 11  P/E               3325 non-null   float64
+ 12  P/FCF_mean        3337 non-null   float64
+ 13  P/B_mean          3337 non-null   float64
+ 14  ROE_mean          3337 non-null   float64
+ 15  ROA_mean          3337 non-null   float64
+ 16  A/E_mean          3337 non-null   float64
+ 17  P/E_mean          3337 non-null   float64
+dtypes: float64(13), int64(1), str(4)
+memory usage: 469.4 KB
 </pre>
 </div>
 </div>
@@ -8487,7 +8505,7 @@ memory usage: 496.5+ KB
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [14]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [15]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Get only active stocks in the current position statement</span>
@@ -8503,7 +8521,7 @@ memory usage: 496.5+ KB
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[14]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[15]:</div>
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
 <div>
 <style scoped="">
@@ -8554,20 +8572,20 @@ memory usage: 496.5+ KB
 <td>Large</td>
 <td>Beverages</td>
 <td>Ambev S.A.</td>
-<td>46850.0</td>
-<td>3.00</td>
-<td>12.000000</td>
-<td>2.702703</td>
-<td>17.205</td>
-<td>9.9752</td>
-<td>1.5295</td>
-<td>15.789474</td>
-<td>32.689242</td>
-<td>6.431458</td>
-<td>19.463443</td>
-<td>6.957529</td>
-<td>3.055407</td>
-<td>25.417365</td>
+<td>48099.0</td>
+<td>3.08</td>
+<td>13.391304</td>
+<td>2.990291</td>
+<td>16.977</td>
+<td>9.1359</td>
+<td>1.6503</td>
+<td>17.111111</td>
+<td>34.552903</td>
+<td>7.331050</td>
+<td>20.833746</td>
+<td>7.399283</td>
+<td>3.116500</td>
+<td>25.441618</td>
 </tr>
 <tr>
 <th>1</th>
@@ -8577,20 +8595,20 @@ memory usage: 496.5+ KB
 <td>Mid</td>
 <td>Semiconductors &amp; Semiconductor Equipment</td>
 <td>Axcelis Technologies, Inc.</td>
-<td>2734.0</td>
-<td>89.05</td>
-<td>22.951031</td>
-<td>2.705864</td>
-<td>13.619</td>
-<td>6.3973</td>
-<td>1.3252</td>
-<td>20.952941</td>
-<td>43.826932</td>
-<td>4.052390</td>
-<td>2.852073</td>
-<td>2.995305</td>
-<td>1.583423</td>
-<td>5.467581</td>
+<td>2475.0</td>
+<td>80.62</td>
+<td>23.781711</td>
+<td>2.393705</td>
+<td>11.745</td>
+<td>5.5031</td>
+<td>1.3157</td>
+<td>21.215789</td>
+<td>41.972388</td>
+<td>4.259448</td>
+<td>4.488329</td>
+<td>3.497120</td>
+<td>1.602967</td>
+<td>6.601951</td>
 </tr>
 <tr>
 <th>2</th>
@@ -8600,20 +8618,20 @@ memory usage: 496.5+ KB
 <td>Large</td>
 <td>IT Services</td>
 <td>Accenture plc</td>
-<td>148234.0</td>
-<td>240.86</td>
-<td>13.040606</td>
-<td>4.801834</td>
+<td>132288.0</td>
+<td>214.95</td>
+<td>11.637791</td>
+<td>4.285287</td>
 <td>25.016</td>
 <td>11.1250</td>
 <td>2.0960</td>
-<td>19.922250</td>
-<td>15.680164</td>
-<td>5.811546</td>
-<td>5.690119</td>
-<td>4.447550</td>
-<td>2.066950</td>
-<td>16.037229</td>
+<td>17.779156</td>
+<td>13.941795</td>
+<td>4.419671</td>
+<td>5.938571</td>
+<td>4.606106</td>
+<td>1.996400</td>
+<td>19.154579</td>
 </tr>
 <tr>
 <th>3</th>
@@ -8623,20 +8641,20 @@ memory usage: 496.5+ KB
 <td>Mid</td>
 <td>Specialty Retail</td>
 <td>American Eagle Outfitters, Inc.</td>
-<td>4006.0</td>
-<td>23.63</td>
-<td>26.852273</td>
-<td>2.464025</td>
+<td>4229.0</td>
+<td>24.95</td>
+<td>28.352273</td>
+<td>2.601668</td>
 <td>12.362</td>
 <td>4.6518</td>
 <td>2.5778</td>
-<td>20.370690</td>
-<td>12.426950</td>
-<td>3.230388</td>
-<td>17.679484</td>
-<td>5.468605</td>
-<td>3.624320</td>
-<td>15.200692</td>
+<td>21.508621</td>
+<td>12.503691</td>
+<td>4.226069</td>
+<td>16.967035</td>
+<td>5.291223</td>
+<td>3.719148</td>
+<td>17.785483</td>
 </tr>
 <tr>
 <th>4</th>
@@ -8673,7 +8691,7 @@ memory usage: 496.5+ KB
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [15]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [16]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">merged_df</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
@@ -8689,33 +8707,33 @@ memory usage: 496.5+ KB
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>&lt;class 'pandas.core.frame.DataFrame'&gt;
-RangeIndex: 67 entries, 0 to 66
+<pre>&lt;class 'pandas.DataFrame'&gt;
+RangeIndex: 63 entries, 0 to 62
 Data columns (total 20 columns):
  #   Column            Non-Null Count  Dtype  
 ---  ------            --------------  -----  
- 0   Symbol            67 non-null     object 
- 1   Qty               62 non-null     float64
- 2   Trade Price       62 non-null     float64
- 3   Market Cap Group  64 non-null     object 
- 4   Industry          64 non-null     object 
- 5   Company Name      64 non-null     object 
- 6   Market Cap (M)    64 non-null     float64
- 7   Current Price     64 non-null     float64
- 8   P/FCF             64 non-null     float64
- 9   P/B               64 non-null     float64
- 10  ROE               64 non-null     float64
- 11  ROA               64 non-null     float64
- 12  A/E               64 non-null     float64
- 13  P/E               64 non-null     float64
- 14  P/FCF_mean        64 non-null     float64
- 15  P/B_mean          64 non-null     float64
- 16  ROE_mean          64 non-null     float64
- 17  ROA_mean          64 non-null     float64
- 18  A/E_mean          64 non-null     float64
- 19  P/E_mean          64 non-null     float64
-dtypes: float64(16), object(4)
-memory usage: 10.6+ KB
+ 0   Symbol            63 non-null     str    
+ 1   Qty               58 non-null     float64
+ 2   Trade Price       58 non-null     float64
+ 3   Market Cap Group  58 non-null     str    
+ 4   Industry          58 non-null     str    
+ 5   Company Name      58 non-null     str    
+ 6   Market Cap (M)    58 non-null     float64
+ 7   Current Price     58 non-null     float64
+ 8   P/FCF             58 non-null     float64
+ 9   P/B               58 non-null     float64
+ 10  ROE               58 non-null     float64
+ 11  ROA               58 non-null     float64
+ 12  A/E               58 non-null     float64
+ 13  P/E               58 non-null     float64
+ 14  P/FCF_mean        58 non-null     float64
+ 15  P/B_mean          58 non-null     float64
+ 16  ROE_mean          58 non-null     float64
+ 17  ROA_mean          58 non-null     float64
+ 18  A/E_mean          58 non-null     float64
+ 19  P/E_mean          58 non-null     float64
+dtypes: float64(16), str(4)
+memory usage: 10.0 KB
 </pre>
 </div>
 </div>
@@ -8726,11 +8744,11 @@ memory usage: 10.6+ KB
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [16]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [17]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Remove some unimportant columns</span>
-<span class="n">merged_df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">'Market Cap Group'</span><span class="p">,</span> <span class="s1">'Company Name'</span><span class="p">,</span> <span class="s1">'Market Cap (M)'</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">merged_df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">'Market Cap Group'</span><span class="p">,</span> <span class="s1">'Company Name'</span><span class="p">,</span> <span class="s1">'Market Cap (M)'</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -8774,7 +8792,7 @@ memory usage: 10.6+ KB
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [17]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [18]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">out_of_scanner</span> <span class="o">=</span> <span class="n">merged_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">merged_df</span><span class="p">[</span><span class="s1">'Current Price'</span><span class="p">]</span><span class="o">.</span><span class="n">isna</span><span class="p">(),:]</span>
@@ -8789,7 +8807,7 @@ memory usage: 10.6+ KB
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[17]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[18]:</div>
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
 <div>
 <style scoped="">
@@ -8850,7 +8868,7 @@ memory usage: 10.6+ KB
 <td>NaN</td>
 </tr>
 <tr>
-<th>51</th>
+<th>48</th>
 <td>TPVG</td>
 <td>14.0</td>
 <td>6.8500</td>
@@ -8870,10 +8888,50 @@ memory usage: 10.6+ KB
 <td>NaN</td>
 </tr>
 <tr>
-<th>57</th>
+<th>53</th>
 <td>XYF</td>
 <td>26.0</td>
 <td>10.7635</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr>
+<th>61</th>
+<td>AAT</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr>
+<th>62</th>
+<td>O</td>
+<td>NaN</td>
+<td>NaN</td>
 <td>NaN</td>
 <td>NaN</td>
 <td>NaN</td>
@@ -8912,177 +8970,11 @@ memory usage: 10.6+ KB
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [18]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [19]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">scanned_df</span> <span class="o">=</span> <span class="n">merged_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="o">~</span><span class="n">merged_df</span><span class="p">[</span><span class="s1">'Current Price'</span><span class="p">]</span><span class="o">.</span><span class="n">isna</span><span class="p">(),:]</span>
 <span class="n">scanned_df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[18]:</div>
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
-<div>
-<style scoped="">
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-<thead>
-<tr style="text-align: right;">
-<th></th>
-<th>Symbol</th>
-<th>Qty</th>
-<th>Trade Price</th>
-<th>Industry</th>
-<th>Current Price</th>
-<th>P/FCF</th>
-<th>P/B</th>
-<th>ROE</th>
-<th>ROA</th>
-<th>A/E</th>
-<th>P/E</th>
-<th>P/FCF_mean</th>
-<th>P/B_mean</th>
-<th>ROE_mean</th>
-<th>ROA_mean</th>
-<th>A/E_mean</th>
-<th>P/E_mean</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<th>0</th>
-<td>ABEV</td>
-<td>166.0</td>
-<td>2.399</td>
-<td>Beverages</td>
-<td>3.000</td>
-<td>12.000000</td>
-<td>2.702703</td>
-<td>17.205</td>
-<td>9.9752</td>
-<td>1.5295</td>
-<td>15.789474</td>
-<td>32.689242</td>
-<td>6.431458</td>
-<td>19.463443</td>
-<td>6.957529</td>
-<td>3.055407</td>
-<td>25.417365</td>
-</tr>
-<tr>
-<th>1</th>
-<td>ACLS</td>
-<td>1.0</td>
-<td>80.000</td>
-<td>Semiconductors &amp; Semiconductor Equipment</td>
-<td>89.050</td>
-<td>22.951031</td>
-<td>2.705864</td>
-<td>13.619</td>
-<td>6.3973</td>
-<td>1.3252</td>
-<td>20.952941</td>
-<td>43.826932</td>
-<td>4.052390</td>
-<td>2.852073</td>
-<td>2.995305</td>
-<td>1.583423</td>
-<td>5.467581</td>
-</tr>
-<tr>
-<th>2</th>
-<td>ACN</td>
-<td>1.0</td>
-<td>249.130</td>
-<td>IT Services</td>
-<td>240.860</td>
-<td>13.040606</td>
-<td>4.801834</td>
-<td>25.016</td>
-<td>11.1250</td>
-<td>2.0960</td>
-<td>19.922250</td>
-<td>15.680164</td>
-<td>5.811546</td>
-<td>5.690119</td>
-<td>4.447550</td>
-<td>2.066950</td>
-<td>16.037229</td>
-</tr>
-<tr>
-<th>3</th>
-<td>AEO</td>
-<td>10.0</td>
-<td>10.420</td>
-<td>Specialty Retail</td>
-<td>23.630</td>
-<td>26.852273</td>
-<td>2.464025</td>
-<td>12.362</td>
-<td>4.6518</td>
-<td>2.5778</td>
-<td>20.370690</td>
-<td>12.426950</td>
-<td>3.230388</td>
-<td>17.679484</td>
-<td>5.468605</td>
-<td>3.624320</td>
-<td>15.200692</td>
-</tr>
-<tr>
-<th>5</th>
-<td>ASO</td>
-<td>2.0</td>
-<td>38.950</td>
-<td>Specialty Retail</td>
-<td>57.435</td>
-<td>20.295053</td>
-<td>1.784250</td>
-<td>18.341</td>
-<td>5.8257</td>
-<td>2.5225</td>
-<td>10.480839</td>
-<td>12.426950</td>
-<td>3.230388</td>
-<td>17.679484</td>
-<td>5.468605</td>
-<td>3.624320</td>
-<td>15.200692</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=83ffa868-4b1a-4200-905c-12346973274f">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [19]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">scanned_df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -9139,19 +9031,19 @@ memory usage: 10.6+ KB
 <td>166.0</td>
 <td>2.399</td>
 <td>Beverages</td>
-<td>3.000</td>
-<td>12.000000</td>
-<td>2.702703</td>
-<td>17.205</td>
-<td>9.9752</td>
-<td>1.5295</td>
-<td>15.789474</td>
-<td>32.689242</td>
-<td>6.431458</td>
-<td>19.463443</td>
-<td>6.957529</td>
-<td>3.055407</td>
-<td>25.417365</td>
+<td>3.08</td>
+<td>13.391304</td>
+<td>2.990291</td>
+<td>16.977</td>
+<td>9.1359</td>
+<td>1.6503</td>
+<td>17.111111</td>
+<td>34.552903</td>
+<td>7.331050</td>
+<td>20.833746</td>
+<td>7.399283</td>
+<td>3.116500</td>
+<td>25.441618</td>
 </tr>
 <tr>
 <th>1</th>
@@ -9159,19 +9051,19 @@ memory usage: 10.6+ KB
 <td>1.0</td>
 <td>80.000</td>
 <td>Semiconductors &amp; Semiconductor Equipment</td>
-<td>89.050</td>
-<td>22.951031</td>
-<td>2.705864</td>
-<td>13.619</td>
-<td>6.3973</td>
-<td>1.3252</td>
-<td>20.952941</td>
-<td>43.826932</td>
-<td>4.052390</td>
-<td>2.852073</td>
-<td>2.995305</td>
-<td>1.583423</td>
-<td>5.467581</td>
+<td>80.62</td>
+<td>23.781711</td>
+<td>2.393705</td>
+<td>11.745</td>
+<td>5.5031</td>
+<td>1.3157</td>
+<td>21.215789</td>
+<td>41.972388</td>
+<td>4.259448</td>
+<td>4.488329</td>
+<td>3.497120</td>
+<td>1.602967</td>
+<td>6.601951</td>
 </tr>
 <tr>
 <th>2</th>
@@ -9179,19 +9071,19 @@ memory usage: 10.6+ KB
 <td>1.0</td>
 <td>249.130</td>
 <td>IT Services</td>
-<td>240.860</td>
-<td>13.040606</td>
-<td>4.801834</td>
+<td>214.95</td>
+<td>11.637791</td>
+<td>4.285287</td>
 <td>25.016</td>
 <td>11.1250</td>
 <td>2.0960</td>
-<td>19.922250</td>
-<td>15.680164</td>
-<td>5.811546</td>
-<td>5.690119</td>
-<td>4.447550</td>
-<td>2.066950</td>
-<td>16.037229</td>
+<td>17.779156</td>
+<td>13.941795</td>
+<td>4.419671</td>
+<td>5.938571</td>
+<td>4.606106</td>
+<td>1.996400</td>
+<td>19.154579</td>
 </tr>
 <tr>
 <th>3</th>
@@ -9199,19 +9091,19 @@ memory usage: 10.6+ KB
 <td>10.0</td>
 <td>10.420</td>
 <td>Specialty Retail</td>
-<td>23.630</td>
-<td>26.852273</td>
-<td>2.464025</td>
+<td>24.95</td>
+<td>28.352273</td>
+<td>2.601668</td>
 <td>12.362</td>
 <td>4.6518</td>
 <td>2.5778</td>
-<td>20.370690</td>
-<td>12.426950</td>
-<td>3.230388</td>
-<td>17.679484</td>
-<td>5.468605</td>
-<td>3.624320</td>
-<td>15.200692</td>
+<td>21.508621</td>
+<td>12.503691</td>
+<td>4.226069</td>
+<td>16.967035</td>
+<td>5.291223</td>
+<td>3.719148</td>
+<td>17.785483</td>
 </tr>
 <tr>
 <th>5</th>
@@ -9219,19 +9111,185 @@ memory usage: 10.6+ KB
 <td>2.0</td>
 <td>38.950</td>
 <td>Specialty Retail</td>
-<td>57.435</td>
-<td>20.295053</td>
-<td>1.784250</td>
+<td>59.07</td>
+<td>20.872792</td>
+<td>1.835042</td>
 <td>18.341</td>
 <td>5.8257</td>
 <td>2.5225</td>
-<td>10.480839</td>
-<td>12.426950</td>
-<td>3.230388</td>
-<td>17.679484</td>
-<td>5.468605</td>
-<td>3.624320</td>
-<td>15.200692</td>
+<td>10.779197</td>
+<td>12.503691</td>
+<td>4.226069</td>
+<td>16.967035</td>
+<td>5.291223</td>
+<td>3.719148</td>
+<td>17.785483</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=83ffa868-4b1a-4200-905c-12346973274f">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [20]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">scanned_df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child jp-OutputArea-executeResult">
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[20]:</div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>Symbol</th>
+<th>Qty</th>
+<th>Trade Price</th>
+<th>Industry</th>
+<th>Current Price</th>
+<th>P/FCF</th>
+<th>P/B</th>
+<th>ROE</th>
+<th>ROA</th>
+<th>A/E</th>
+<th>P/E</th>
+<th>P/FCF_mean</th>
+<th>P/B_mean</th>
+<th>ROE_mean</th>
+<th>ROA_mean</th>
+<th>A/E_mean</th>
+<th>P/E_mean</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>0</th>
+<td>ABEV</td>
+<td>166.0</td>
+<td>2.399</td>
+<td>Beverages</td>
+<td>3.08</td>
+<td>13.391304</td>
+<td>2.990291</td>
+<td>16.977</td>
+<td>9.1359</td>
+<td>1.6503</td>
+<td>17.111111</td>
+<td>34.552903</td>
+<td>7.331050</td>
+<td>20.833746</td>
+<td>7.399283</td>
+<td>3.116500</td>
+<td>25.441618</td>
+</tr>
+<tr>
+<th>1</th>
+<td>ACLS</td>
+<td>1.0</td>
+<td>80.000</td>
+<td>Semiconductors &amp; Semiconductor Equipment</td>
+<td>80.62</td>
+<td>23.781711</td>
+<td>2.393705</td>
+<td>11.745</td>
+<td>5.5031</td>
+<td>1.3157</td>
+<td>21.215789</td>
+<td>41.972388</td>
+<td>4.259448</td>
+<td>4.488329</td>
+<td>3.497120</td>
+<td>1.602967</td>
+<td>6.601951</td>
+</tr>
+<tr>
+<th>2</th>
+<td>ACN</td>
+<td>1.0</td>
+<td>249.130</td>
+<td>IT Services</td>
+<td>214.95</td>
+<td>11.637791</td>
+<td>4.285287</td>
+<td>25.016</td>
+<td>11.1250</td>
+<td>2.0960</td>
+<td>17.779156</td>
+<td>13.941795</td>
+<td>4.419671</td>
+<td>5.938571</td>
+<td>4.606106</td>
+<td>1.996400</td>
+<td>19.154579</td>
+</tr>
+<tr>
+<th>3</th>
+<td>AEO</td>
+<td>10.0</td>
+<td>10.420</td>
+<td>Specialty Retail</td>
+<td>24.95</td>
+<td>28.352273</td>
+<td>2.601668</td>
+<td>12.362</td>
+<td>4.6518</td>
+<td>2.5778</td>
+<td>21.508621</td>
+<td>12.503691</td>
+<td>4.226069</td>
+<td>16.967035</td>
+<td>5.291223</td>
+<td>3.719148</td>
+<td>17.785483</td>
+</tr>
+<tr>
+<th>5</th>
+<td>ASO</td>
+<td>2.0</td>
+<td>38.950</td>
+<td>Specialty Retail</td>
+<td>59.07</td>
+<td>20.872792</td>
+<td>1.835042</td>
+<td>18.341</td>
+<td>5.8257</td>
+<td>2.5225</td>
+<td>10.779197</td>
+<td>12.503691</td>
+<td>4.226069</td>
+<td>16.967035</td>
+<td>5.291223</td>
+<td>3.719148</td>
+<td>17.785483</td>
 </tr>
 </tbody>
 </table>
@@ -9298,12 +9356,12 @@ memory usage: 10.6+ KB
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=6fb56c13-4072-400a-8f62-7d6fc22474c1">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=6fb56c13-4072-400a-8f62-7d6fc22474c1">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [20]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [21]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Create "Overvaluation" column</span>
@@ -9316,30 +9374,12 @@ memory usage: 10.6+ KB
 </div>
 </div>
 </div>
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>C:\Users\Jane Vu\AppData\Local\Temp\ipykernel_25252\2711344732.py:2: SettingWithCopyWarning: 
-A value is trying to be set on a copy of a slice from a DataFrame.
-Try using .loc[row_indexer,col_indexer] = value instead
-
-See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
-  scanned_df['Overvaluation'] = 0
-</pre>
-</div>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=9fa94aec-baa7-421b-8d6f-ae5b0e2f54a9">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=9fa94aec-baa7-421b-8d6f-ae5b0e2f54a9">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [21]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [22]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Create "Bad Quality" column</span>
@@ -9355,30 +9395,12 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 </div>
 </div>
 </div>
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>C:\Users\Jane Vu\AppData\Local\Temp\ipykernel_25252\641759816.py:2: SettingWithCopyWarning: 
-A value is trying to be set on a copy of a slice from a DataFrame.
-Try using .loc[row_indexer,col_indexer] = value instead
-
-See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
-  scanned_df['Bad Quality'] = 0
-</pre>
-</div>
-</div>
-</div>
-</div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=5893c8c8-5b38-4db0-8b9b-239fa0debfa8">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [22]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [23]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">scanned_df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
@@ -9392,7 +9414,7 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[22]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[23]:</div>
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
 <div>
 <style scoped="">
@@ -9440,19 +9462,19 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 <td>166.0</td>
 <td>2.399</td>
 <td>Beverages</td>
-<td>3.000</td>
-<td>12.000000</td>
-<td>2.702703</td>
-<td>17.205</td>
-<td>9.9752</td>
-<td>1.5295</td>
-<td>15.789474</td>
-<td>32.689242</td>
-<td>6.431458</td>
-<td>19.463443</td>
-<td>6.957529</td>
-<td>3.055407</td>
-<td>25.417365</td>
+<td>3.08</td>
+<td>13.391304</td>
+<td>2.990291</td>
+<td>16.977</td>
+<td>9.1359</td>
+<td>1.6503</td>
+<td>17.111111</td>
+<td>34.552903</td>
+<td>7.331050</td>
+<td>20.833746</td>
+<td>7.399283</td>
+<td>3.116500</td>
+<td>25.441618</td>
 <td>0</td>
 <td>1</td>
 </tr>
@@ -9462,19 +9484,19 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 <td>1.0</td>
 <td>80.000</td>
 <td>Semiconductors &amp; Semiconductor Equipment</td>
-<td>89.050</td>
-<td>22.951031</td>
-<td>2.705864</td>
-<td>13.619</td>
-<td>6.3973</td>
-<td>1.3252</td>
-<td>20.952941</td>
-<td>43.826932</td>
-<td>4.052390</td>
-<td>2.852073</td>
-<td>2.995305</td>
-<td>1.583423</td>
-<td>5.467581</td>
+<td>80.62</td>
+<td>23.781711</td>
+<td>2.393705</td>
+<td>11.745</td>
+<td>5.5031</td>
+<td>1.3157</td>
+<td>21.215789</td>
+<td>41.972388</td>
+<td>4.259448</td>
+<td>4.488329</td>
+<td>3.497120</td>
+<td>1.602967</td>
+<td>6.601951</td>
 <td>1</td>
 <td>0</td>
 </tr>
@@ -9484,20 +9506,20 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 <td>1.0</td>
 <td>249.130</td>
 <td>IT Services</td>
-<td>240.860</td>
-<td>13.040606</td>
-<td>4.801834</td>
+<td>214.95</td>
+<td>11.637791</td>
+<td>4.285287</td>
 <td>25.016</td>
 <td>11.1250</td>
 <td>2.0960</td>
-<td>19.922250</td>
-<td>15.680164</td>
-<td>5.811546</td>
-<td>5.690119</td>
-<td>4.447550</td>
-<td>2.066950</td>
-<td>16.037229</td>
-<td>1</td>
+<td>17.779156</td>
+<td>13.941795</td>
+<td>4.419671</td>
+<td>5.938571</td>
+<td>4.606106</td>
+<td>1.996400</td>
+<td>19.154579</td>
+<td>0</td>
 <td>0</td>
 </tr>
 <tr>
@@ -9506,19 +9528,19 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 <td>10.0</td>
 <td>10.420</td>
 <td>Specialty Retail</td>
-<td>23.630</td>
-<td>26.852273</td>
-<td>2.464025</td>
+<td>24.95</td>
+<td>28.352273</td>
+<td>2.601668</td>
 <td>12.362</td>
 <td>4.6518</td>
 <td>2.5778</td>
-<td>20.370690</td>
-<td>12.426950</td>
-<td>3.230388</td>
-<td>17.679484</td>
-<td>5.468605</td>
-<td>3.624320</td>
-<td>15.200692</td>
+<td>21.508621</td>
+<td>12.503691</td>
+<td>4.226069</td>
+<td>16.967035</td>
+<td>5.291223</td>
+<td>3.719148</td>
+<td>17.785483</td>
 <td>2</td>
 <td>3</td>
 </tr>
@@ -9528,19 +9550,19 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 <td>2.0</td>
 <td>38.950</td>
 <td>Specialty Retail</td>
-<td>57.435</td>
-<td>20.295053</td>
-<td>1.784250</td>
+<td>59.07</td>
+<td>20.872792</td>
+<td>1.835042</td>
 <td>18.341</td>
 <td>5.8257</td>
 <td>2.5225</td>
-<td>10.480839</td>
-<td>12.426950</td>
-<td>3.230388</td>
-<td>17.679484</td>
-<td>5.468605</td>
-<td>3.624320</td>
-<td>15.200692</td>
+<td>10.779197</td>
+<td>12.503691</td>
+<td>4.226069</td>
+<td>16.967035</td>
+<td>5.291223</td>
+<td>3.719148</td>
+<td>17.785483</td>
 <td>1</td>
 <td>0</td>
 </tr>
@@ -9556,7 +9578,7 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [23]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [24]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Select stocks that have at least one signal</span>
@@ -9571,190 +9593,10 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [24]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">scanned_df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[24]:</div>
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
-<div>
-<style scoped="">
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-<thead>
-<tr style="text-align: right;">
-<th></th>
-<th>Symbol</th>
-<th>Qty</th>
-<th>Trade Price</th>
-<th>Industry</th>
-<th>Current Price</th>
-<th>P/FCF</th>
-<th>P/B</th>
-<th>ROE</th>
-<th>ROA</th>
-<th>A/E</th>
-<th>P/E</th>
-<th>P/FCF_mean</th>
-<th>P/B_mean</th>
-<th>ROE_mean</th>
-<th>ROA_mean</th>
-<th>A/E_mean</th>
-<th>P/E_mean</th>
-<th>Overvaluation</th>
-<th>Bad Quality</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<th>0</th>
-<td>ABEV</td>
-<td>166.0</td>
-<td>2.399</td>
-<td>Beverages</td>
-<td>3.000</td>
-<td>12.000000</td>
-<td>2.702703</td>
-<td>17.205</td>
-<td>9.9752</td>
-<td>1.5295</td>
-<td>15.789474</td>
-<td>32.689242</td>
-<td>6.431458</td>
-<td>19.463443</td>
-<td>6.957529</td>
-<td>3.055407</td>
-<td>25.417365</td>
-<td>0</td>
-<td>1</td>
-</tr>
-<tr>
-<th>1</th>
-<td>ACLS</td>
-<td>1.0</td>
-<td>80.000</td>
-<td>Semiconductors &amp; Semiconductor Equipment</td>
-<td>89.050</td>
-<td>22.951031</td>
-<td>2.705864</td>
-<td>13.619</td>
-<td>6.3973</td>
-<td>1.3252</td>
-<td>20.952941</td>
-<td>43.826932</td>
-<td>4.052390</td>
-<td>2.852073</td>
-<td>2.995305</td>
-<td>1.583423</td>
-<td>5.467581</td>
-<td>1</td>
-<td>0</td>
-</tr>
-<tr>
-<th>2</th>
-<td>ACN</td>
-<td>1.0</td>
-<td>249.130</td>
-<td>IT Services</td>
-<td>240.860</td>
-<td>13.040606</td>
-<td>4.801834</td>
-<td>25.016</td>
-<td>11.1250</td>
-<td>2.0960</td>
-<td>19.922250</td>
-<td>15.680164</td>
-<td>5.811546</td>
-<td>5.690119</td>
-<td>4.447550</td>
-<td>2.066950</td>
-<td>16.037229</td>
-<td>1</td>
-<td>0</td>
-</tr>
-<tr>
-<th>3</th>
-<td>AEO</td>
-<td>10.0</td>
-<td>10.420</td>
-<td>Specialty Retail</td>
-<td>23.630</td>
-<td>26.852273</td>
-<td>2.464025</td>
-<td>12.362</td>
-<td>4.6518</td>
-<td>2.5778</td>
-<td>20.370690</td>
-<td>12.426950</td>
-<td>3.230388</td>
-<td>17.679484</td>
-<td>5.468605</td>
-<td>3.624320</td>
-<td>15.200692</td>
-<td>2</td>
-<td>3</td>
-</tr>
-<tr>
-<th>5</th>
-<td>ASO</td>
-<td>2.0</td>
-<td>38.950</td>
-<td>Specialty Retail</td>
-<td>57.435</td>
-<td>20.295053</td>
-<td>1.784250</td>
-<td>18.341</td>
-<td>5.8257</td>
-<td>2.5225</td>
-<td>10.480839</td>
-<td>12.426950</td>
-<td>3.230388</td>
-<td>17.679484</td>
-<td>5.468605</td>
-<td>3.624320</td>
-<td>15.200692</td>
-<td>1</td>
-<td>0</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=90ff0303-14f3-40c7-931f-a975c1d03974">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
 <div class="jp-InputPrompt jp-InputArea-prompt">In [25]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Rearrange columns and round numbers</span>
-<span class="n">scanned_df</span> <span class="o">=</span> <span class="n">scanned_df</span><span class="p">[[</span><span class="s1">'Symbol'</span><span class="p">,</span> <span class="s1">'Industry'</span><span class="p">,</span> <span class="s1">'Overvaluation'</span><span class="p">,</span> <span class="s1">'Bad Quality'</span><span class="p">,</span> <span class="s1">'P/FCF'</span><span class="p">,</span> <span class="s1">'P/FCF_mean'</span><span class="p">,</span> <span class="s1">'P/B'</span><span class="p">,</span> <span class="s1">'P/B_mean'</span><span class="p">,</span> <span class="s1">'P/E'</span><span class="p">,</span> <span class="s1">'P/E_mean'</span><span class="p">,</span> <span class="s1">'ROE'</span><span class="p">,</span> <span class="s1">'ROE_mean'</span><span class="p">,</span> <span class="s1">'ROA'</span><span class="p">,</span> <span class="s1">'ROA_mean'</span><span class="p">,</span> <span class="s1">'A/E'</span><span class="p">,</span> <span class="s1">'A/E_mean'</span><span class="p">]]</span>
-<span class="n">scanned_df</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">scanned_df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -9786,954 +9628,136 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 <tr style="text-align: right;">
 <th></th>
 <th>Symbol</th>
+<th>Qty</th>
+<th>Trade Price</th>
 <th>Industry</th>
+<th>Current Price</th>
+<th>P/FCF</th>
+<th>P/B</th>
+<th>ROE</th>
+<th>ROA</th>
+<th>A/E</th>
+<th>P/E</th>
+<th>P/FCF_mean</th>
+<th>P/B_mean</th>
+<th>ROE_mean</th>
+<th>ROA_mean</th>
+<th>A/E_mean</th>
+<th>P/E_mean</th>
 <th>Overvaluation</th>
 <th>Bad Quality</th>
-<th>P/FCF</th>
-<th>P/FCF_mean</th>
-<th>P/B</th>
-<th>P/B_mean</th>
-<th>P/E</th>
-<th>P/E_mean</th>
-<th>ROE</th>
-<th>ROE_mean</th>
-<th>ROA</th>
-<th>ROA_mean</th>
-<th>A/E</th>
-<th>A/E_mean</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <th>0</th>
 <td>ABEV</td>
+<td>166.0</td>
+<td>2.399</td>
 <td>Beverages</td>
+<td>3.08</td>
+<td>13.391304</td>
+<td>2.990291</td>
+<td>16.9770</td>
+<td>9.1359</td>
+<td>1.6503</td>
+<td>17.111111</td>
+<td>34.552903</td>
+<td>7.331050</td>
+<td>20.833746</td>
+<td>7.399283</td>
+<td>3.116500</td>
+<td>25.441618</td>
 <td>0</td>
 <td>1</td>
-<td>12.000000</td>
-<td>32.689242</td>
-<td>2.702703</td>
-<td>6.431458</td>
-<td>15.789474</td>
-<td>25.417365</td>
-<td>17.2050</td>
-<td>19.463443</td>
-<td>9.9752</td>
-<td>6.957529</td>
-<td>1.5295</td>
-<td>3.055407</td>
 </tr>
 <tr>
 <th>1</th>
 <td>ACLS</td>
+<td>1.0</td>
+<td>80.000</td>
 <td>Semiconductors &amp; Semiconductor Equipment</td>
+<td>80.62</td>
+<td>23.781711</td>
+<td>2.393705</td>
+<td>11.7450</td>
+<td>5.5031</td>
+<td>1.3157</td>
+<td>21.215789</td>
+<td>41.972388</td>
+<td>4.259448</td>
+<td>4.488329</td>
+<td>3.497120</td>
+<td>1.602967</td>
+<td>6.601951</td>
 <td>1</td>
 <td>0</td>
-<td>22.951031</td>
-<td>43.826932</td>
-<td>2.705864</td>
-<td>4.052390</td>
-<td>20.952941</td>
-<td>5.467581</td>
-<td>13.6190</td>
-<td>2.852073</td>
-<td>6.3973</td>
-<td>2.995305</td>
-<td>1.3252</td>
-<td>1.583423</td>
-</tr>
-<tr>
-<th>2</th>
-<td>ACN</td>
-<td>IT Services</td>
-<td>1</td>
-<td>0</td>
-<td>13.040606</td>
-<td>15.680164</td>
-<td>4.801834</td>
-<td>5.811546</td>
-<td>19.922250</td>
-<td>16.037229</td>
-<td>25.0160</td>
-<td>5.690119</td>
-<td>11.1250</td>
-<td>4.447550</td>
-<td>2.0960</td>
-<td>2.066950</td>
 </tr>
 <tr>
 <th>3</th>
 <td>AEO</td>
+<td>10.0</td>
+<td>10.420</td>
 <td>Specialty Retail</td>
+<td>24.95</td>
+<td>28.352273</td>
+<td>2.601668</td>
+<td>12.3620</td>
+<td>4.6518</td>
+<td>2.5778</td>
+<td>21.508621</td>
+<td>12.503691</td>
+<td>4.226069</td>
+<td>16.967035</td>
+<td>5.291223</td>
+<td>3.719148</td>
+<td>17.785483</td>
 <td>2</td>
 <td>3</td>
-<td>26.852273</td>
-<td>12.426950</td>
-<td>2.464025</td>
-<td>3.230388</td>
-<td>20.370690</td>
-<td>15.200692</td>
-<td>12.3620</td>
-<td>17.679484</td>
-<td>4.6518</td>
-<td>5.468605</td>
-<td>2.5778</td>
-<td>3.624320</td>
 </tr>
 <tr>
 <th>5</th>
 <td>ASO</td>
+<td>2.0</td>
+<td>38.950</td>
 <td>Specialty Retail</td>
+<td>59.07</td>
+<td>20.872792</td>
+<td>1.835042</td>
+<td>18.3410</td>
+<td>5.8257</td>
+<td>2.5225</td>
+<td>10.779197</td>
+<td>12.503691</td>
+<td>4.226069</td>
+<td>16.967035</td>
+<td>5.291223</td>
+<td>3.719148</td>
+<td>17.785483</td>
 <td>1</td>
 <td>0</td>
-<td>20.295053</td>
-<td>12.426950</td>
-<td>1.784250</td>
-<td>3.230388</td>
-<td>10.480839</td>
-<td>15.200692</td>
-<td>18.3410</td>
-<td>17.679484</td>
-<td>5.8257</td>
-<td>5.468605</td>
-<td>2.5225</td>
-<td>3.624320</td>
 </tr>
 <tr>
 <th>6</th>
 <td>ATKR</td>
+<td>4.0</td>
+<td>61.995</td>
 <td>Electrical Equipment</td>
-<td>1</td>
-<td>3</td>
-<td>11.564767</td>
-<td>4.427235</td>
-<td>1.608069</td>
-<td>4.015284</td>
-<td>-48.875912</td>
-<td>4.021032</td>
+<td>66.71</td>
+<td>11.521589</td>
+<td>1.602065</td>
 <td>-3.1914</td>
-<td>-15.270588</td>
 <td>4.3055</td>
-<td>0.585300</td>
 <td>1.9844</td>
-<td>1.575544</td>
-</tr>
-<tr>
-<th>7</th>
-<td>BTU</td>
-<td>Oil, Gas &amp; Consumable Fuels</td>
-<td>0</td>
-<td>6</td>
-<td>-56.187500</td>
-<td>2.783979</td>
-<td>1.250783</td>
-<td>1.737886</td>
-<td>-83.627907</td>
-<td>12.224479</td>
-<td>-1.1603</td>
-<td>9.605751</td>
-<td>0.2625</td>
-<td>5.063804</td>
-<td>1.6421</td>
-<td>2.003669</td>
-</tr>
-<tr>
-<th>9</th>
-<td>CHA</td>
-<td>Hotels, Restaurants &amp; Leisure</td>
-<td>3</td>
-<td>0</td>
-<td>6.056497</td>
-<td>5.651177</td>
-<td>1.715200</td>
-<td>1.511624</td>
-<td>13.743590</td>
-<td>8.974609</td>
-<td>30.7320</td>
-<td>5.812794</td>
-<td>14.3400</td>
-<td>3.066413</td>
-<td>1.4061</td>
-<td>2.330316</td>
-</tr>
-<tr>
-<th>10</th>
-<td>CHRD</td>
-<td>Oil, Gas &amp; Consumable Fuels</td>
-<td>2</td>
-<td>4</td>
-<td>6.673090</td>
-<td>2.783979</td>
-<td>0.707353</td>
-<td>1.737886</td>
-<td>33.929054</td>
-<td>12.224479</td>
-<td>2.0252</td>
-<td>9.605751</td>
-<td>4.6720</td>
-<td>5.063804</td>
-<td>1.6222</td>
-<td>2.003669</td>
-</tr>
-<tr>
-<th>11</th>
-<td>CNR</td>
-<td>Oil, Gas &amp; Consumable Fuels</td>
+<td>-48.693431</td>
+<td>5.832914</td>
+<td>3.565588</td>
+<td>10.471400</td>
+<td>5.112980</td>
+<td>1.827633</td>
+<td>-1.509351</td>
 <td>1</td>
 <td>5</td>
-<td>55.524390</td>
-<td>2.783979</td>
-<td>1.234210</td>
-<td>1.737886</td>
-<td>-96.872340</td>
-<td>12.224479</td>
-<td>-1.6357</td>
-<td>9.605751</td>
-<td>-0.0623</td>
-<td>5.063804</td>
-<td>1.6397</td>
-<td>2.003669</td>
-</tr>
-<tr>
-<th>12</th>
-<td>COP</td>
-<td>Oil, Gas &amp; Consumable Fuels</td>
-<td>1</td>
-<td>0</td>
-<td>18.598616</td>
-<td>17.308594</td>
-<td>2.042173</td>
-<td>2.291144</td>
-<td>16.929134</td>
-<td>19.606511</td>
-<td>12.3570</td>
-<td>11.528460</td>
-<td>6.2822</td>
-<td>5.291562</td>
-<td>1.8909</td>
-<td>2.583363</td>
-</tr>
-<tr>
-<th>13</th>
-<td>CRUS</td>
-<td>Semiconductors &amp; Semiconductor Equipment</td>
-<td>1</td>
-<td>0</td>
-<td>12.071368</td>
-<td>43.826932</td>
-<td>3.445199</td>
-<td>4.052390</td>
-<td>18.793651</td>
-<td>5.467581</td>
-<td>19.8660</td>
-<td>2.852073</td>
-<td>11.8270</td>
-<td>2.995305</td>
-<td>1.1680</td>
-<td>1.583423</td>
-</tr>
-<tr>
-<th>14</th>
-<td>CTSH</td>
-<td>IT Services</td>
-<td>1</td>
-<td>0</td>
-<td>14.016917</td>
-<td>15.680164</td>
-<td>2.378628</td>
-<td>5.811546</td>
-<td>16.353070</td>
-<td>16.037229</td>
-<td>15.1580</td>
-<td>5.690119</td>
-<td>10.2290</td>
-<td>4.447550</td>
-<td>1.3781</td>
-<td>2.066950</td>
-</tr>
-<tr>
-<th>15</th>
-<td>CVE</td>
-<td>Oil, Gas &amp; Consumable Fuels</td>
-<td>1</td>
-<td>3</td>
-<td>19.117117</td>
-<td>17.308594</td>
-<td>1.842014</td>
-<td>2.291144</td>
-<td>17.252033</td>
-<td>19.606511</td>
-<td>10.8360</td>
-<td>11.528460</td>
-<td>4.7989</td>
-<td>5.291562</td>
-<td>1.8957</td>
-<td>2.583363</td>
-</tr>
-<tr>
-<th>16</th>
-<td>DDI</td>
-<td>Entertainment</td>
-<td>1</td>
-<td>0</td>
-<td>3.078292</td>
-<td>8.556208</td>
-<td>0.463062</td>
-<td>0.960911</td>
-<td>3.760870</td>
-<td>-4.533301</td>
-<td>13.1190</td>
-<td>8.291220</td>
-<td>8.6449</td>
-<td>2.296658</td>
-<td>1.0988</td>
-<td>1.625900</td>
-</tr>
-<tr>
-<th>17</th>
-<td>DOX</td>
-<td>IT Services</td>
-<td>1</td>
-<td>0</td>
-<td>10.644833</td>
-<td>6.061255</td>
-<td>2.306940</td>
-<td>2.377140</td>
-<td>14.145068</td>
-<td>16.681325</td>
-<td>16.4790</td>
-<td>1.127140</td>
-<td>8.2134</td>
-<td>3.559255</td>
-<td>1.8534</td>
-<td>3.314844</td>
-</tr>
-<tr>
-<th>18</th>
-<td>FHI</td>
-<td>Capital Markets</td>
-<td>1</td>
-<td>0</td>
-<td>15.979412</td>
-<td>9.886118</td>
-<td>3.349568</td>
-<td>3.593970</td>
-<td>10.590643</td>
-<td>14.925085</td>
-<td>34.3050</td>
-<td>18.037870</td>
-<td>14.8900</td>
-<td>6.703736</td>
-<td>1.8625</td>
-<td>3.699450</td>
-</tr>
-<tr>
-<th>19</th>
-<td>FINV</td>
-<td>Consumer Finance</td>
-<td>1</td>
-<td>0</td>
-<td>5.630000</td>
-<td>4.845124</td>
-<td>0.612622</td>
-<td>1.092426</td>
-<td>3.753333</td>
-<td>4.808075</td>
-<td>17.7870</td>
-<td>10.907507</td>
-<td>18.5440</td>
-<td>7.554379</td>
-<td>1.6033</td>
-<td>4.060124</td>
-</tr>
-<tr>
-<th>22</th>
-<td>GIII</td>
-<td>Textiles, Apparel &amp; Luxury Goods</td>
-<td>0</td>
-<td>2</td>
-<td>3.544601</td>
-<td>15.513637</td>
-<td>0.712096</td>
-<td>2.207453</td>
-<td>9.235474</td>
-<td>22.313211</td>
-<td>8.6143</td>
-<td>8.461400</td>
-<td>4.9313</td>
-<td>3.716571</td>
-<td>1.5419</td>
-<td>2.481029</td>
-</tr>
-<tr>
-<th>23</th>
-<td>GMAB</td>
-<td>Biotechnology</td>
-<td>1</td>
-<td>0</td>
-<td>1.483277</td>
-<td>2.648652</td>
-<td>0.327588</td>
-<td>8.157556</td>
-<td>1.219124</td>
-<td>-3.235753</td>
-<td>29.4130</td>
-<td>2.077832</td>
-<td>13.3770</td>
-<td>-3.701154</td>
-<td>1.2208</td>
-<td>1.527241</td>
-</tr>
-<tr>
-<th>24</th>
-<td>GSL</td>
-<td>Marine Transportation</td>
-<td>1</td>
-<td>0</td>
-<td>9.310000</td>
-<td>6.439034</td>
-<td>0.775833</td>
-<td>0.811241</td>
-<td>3.342908</td>
-<td>9.263626</td>
-<td>26.1840</td>
-<td>8.636070</td>
-<td>10.1190</td>
-<td>3.773564</td>
-<td>1.5538</td>
-<td>1.828064</td>
-</tr>
-<tr>
-<th>25</th>
-<td>HAFN</td>
-<td>Oil, Gas &amp; Consumable Fuels</td>
-<td>1</td>
-<td>0</td>
-<td>6.330097</td>
-<td>2.783979</td>
-<td>1.393162</td>
-<td>1.737886</td>
-<td>10.688525</td>
-<td>12.224479</td>
-<td>13.0360</td>
-<td>9.605751</td>
-<td>5.6698</td>
-<td>5.063804</td>
-<td>1.5318</td>
-<td>2.003669</td>
-</tr>
-<tr>
-<th>28</th>
-<td>KOF</td>
-<td>Beverages</td>
-<td>1</td>
-<td>1</td>
-<td>65.000000</td>
-<td>32.689242</td>
-<td>3.060697</td>
-<td>6.431458</td>
-<td>18.314332</td>
-<td>25.417365</td>
-<td>16.5660</td>
-<td>19.463443</td>
-<td>7.6811</td>
-<td>6.957529</td>
-<td>2.2302</td>
-<td>3.055407</td>
-</tr>
-<tr>
-<th>29</th>
-<td>LX</td>
-<td>Consumer Finance</td>
-<td>0</td>
-<td>1</td>
-<td>4.289855</td>
-<td>4.845124</td>
-<td>0.303901</td>
-<td>1.092426</td>
-<td>2.055556</td>
-<td>4.808075</td>
-<td>16.4120</td>
-<td>10.907507</td>
-<td>5.3789</td>
-<td>7.554379</td>
-<td>1.9508</td>
-<td>4.060124</td>
-</tr>
-<tr>
-<th>30</th>
-<td>MAT</td>
-<td>Leisure Products</td>
-<td>1</td>
-<td>0</td>
-<td>14.040000</td>
-<td>20.600076</td>
-<td>2.896836</td>
-<td>4.067486</td>
-<td>15.954545</td>
-<td>7.104150</td>
-<td>18.9000</td>
-<td>1.441971</td>
-<td>5.8124</td>
-<td>5.114086</td>
-<td>2.9159</td>
-<td>3.284017</td>
-</tr>
-<tr>
-<th>31</th>
-<td>MOMO</td>
-<td>Interactive Media &amp; Services</td>
-<td>2</td>
-<td>1</td>
-<td>9.565217</td>
-<td>6.520878</td>
-<td>0.658683</td>
-<td>1.338458</td>
-<td>11.000000</td>
-<td>7.991114</td>
-<td>6.7157</td>
-<td>3.103894</td>
-<td>5.0331</td>
-<td>4.294181</td>
-<td>1.2261</td>
-<td>1.693500</td>
-</tr>
-<tr>
-<th>34</th>
-<td>ON</td>
-<td>Semiconductors &amp; Semiconductor Equipment</td>
-<td>1</td>
-<td>3</td>
-<td>20.732308</td>
-<td>58.338129</td>
-<td>3.455385</td>
-<td>11.061652</td>
-<td>89.840000</td>
-<td>61.642997</td>
-<td>3.8910</td>
-<td>16.164014</td>
-<td>5.6935</td>
-<td>7.374922</td>
-<td>1.6457</td>
-<td>1.679246</td>
-</tr>
-<tr>
-<th>35</th>
-<td>OVV</td>
-<td>Oil, Gas &amp; Consumable Fuels</td>
-<td>1</td>
-<td>3</td>
-<td>-15.090615</td>
-<td>17.308594</td>
-<td>1.154208</td>
-<td>2.291144</td>
-<td>51.811111</td>
-<td>19.606511</td>
-<td>2.2595</td>
-<td>11.528460</td>
-<td>6.5610</td>
-<td>5.291562</td>
-<td>1.8945</td>
-<td>2.583363</td>
-</tr>
-<tr>
-<th>37</th>
-<td>PDS</td>
-<td>Energy Equipment &amp; Services</td>
-<td>1</td>
-<td>3</td>
-<td>7.893213</td>
-<td>10.325426</td>
-<td>0.961632</td>
-<td>1.344896</td>
-<td>29.268456</td>
-<td>16.608271</td>
-<td>3.5988</td>
-<td>6.004400</td>
-<td>3.7828</td>
-<td>3.414071</td>
-<td>1.6846</td>
-<td>2.165070</td>
-</tr>
-<tr>
-<th>39</th>
-<td>RAL</td>
-<td>Electronic Equipment, Instruments &amp; Components</td>
-<td>0</td>
-<td>5</td>
-<td>13.534591</td>
-<td>24.415345</td>
-<td>2.972376</td>
-<td>3.446121</td>
-<td>-3.970480</td>
-<td>31.265758</td>
-<td>-45.3020</td>
-<td>9.430029</td>
-<td>3.7861</td>
-<td>4.425960</td>
-<td>2.3384</td>
-<td>2.309780</td>
-</tr>
-<tr>
-<th>40</th>
-<td>RWAY</td>
-<td>Capital Markets</td>
-<td>1</td>
-<td>0</td>
-<td>1.832990</td>
-<td>-0.936932</td>
-<td>0.656089</td>
-<td>1.255256</td>
-<td>6.006757</td>
-<td>8.448400</td>
-<td>11.0150</td>
-<td>9.122913</td>
-<td>6.3578</td>
-<td>4.847345</td>
-<td>1.9679</td>
-<td>2.352938</td>
-</tr>
-<tr>
-<th>41</th>
-<td>SCVL</td>
-<td>Specialty Retail</td>
-<td>2</td>
-<td>2</td>
-<td>15.751938</td>
-<td>13.682091</td>
-<td>0.814103</td>
-<td>1.868055</td>
-<td>9.676190</td>
-<td>9.398505</td>
-<td>8.7772</td>
-<td>3.636326</td>
-<td>3.7720</td>
-<td>1.619831</td>
-<td>1.7163</td>
-<td>2.633267</td>
-</tr>
-<tr>
-<th>42</th>
-<td>SFD</td>
-<td>Food Products</td>
-<td>1</td>
-<td>0</td>
-<td>20.275000</td>
-<td>19.631757</td>
-<td>1.479027</td>
-<td>2.291213</td>
-<td>10.910314</td>
-<td>17.677034</td>
-<td>14.0250</td>
-<td>13.194092</td>
-<td>6.9397</td>
-<td>5.735400</td>
-<td>1.7821</td>
-<td>2.231064</td>
-</tr>
-<tr>
-<th>44</th>
-<td>SITC</td>
-<td>Retail REITs</td>
-<td>0</td>
-<td>5</td>
-<td>-109.000000</td>
-<td>11.820739</td>
-<td>1.112245</td>
-<td>2.351774</td>
-<td>12.111111</td>
-<td>21.039193</td>
-<td>2.5409</td>
-<td>6.890929</td>
-<td>0.2179</td>
-<td>2.466588</td>
-<td>2.1213</td>
-<td>5.649413</td>
-</tr>
-<tr>
-<th>45</th>
-<td>SQM</td>
-<td>Chemicals</td>
-<td>3</td>
-<td>1</td>
-<td>292.833333</td>
-<td>17.327078</td>
-<td>3.654706</td>
-<td>2.497315</td>
-<td>38.195652</td>
-<td>14.009194</td>
-<td>9.9546</td>
-<td>6.339767</td>
-<td>5.0240</td>
-<td>4.423244</td>
-<td>2.1353</td>
-<td>2.376273</td>
-</tr>
-<tr>
-<th>46</th>
-<td>STNG</td>
-<td>Oil, Gas &amp; Consumable Fuels</td>
-<td>1</td>
-<td>3</td>
-<td>7.180190</td>
-<td>2.783979</td>
-<td>1.044131</td>
-<td>1.737886</td>
-<td>11.588435</td>
-<td>12.224479</td>
-<td>9.6291</td>
-<td>9.605751</td>
-<td>4.1952</td>
-<td>5.063804</td>
-<td>1.3107</td>
-<td>2.003669</td>
-</tr>
-<tr>
-<th>48</th>
-<td>TGNA</td>
-<td>Media</td>
-<td>2</td>
-<td>0</td>
-<td>7.853383</td>
-<td>-28.189124</td>
-<td>1.079587</td>
-<td>2.266376</td>
-<td>9.947619</td>
-<td>3.330026</td>
-<td>11.4490</td>
-<td>-9.500475</td>
-<td>5.3289</td>
-<td>3.432887</td>
-<td>2.1845</td>
-<td>3.501350</td>
-</tr>
-<tr>
-<th>49</th>
-<td>TGT</td>
-<td>Consumer Staples Distribution &amp; Retail</td>
-<td>0</td>
-<td>1</td>
-<td>17.130106</td>
-<td>29.111370</td>
-<td>3.307917</td>
-<td>5.379078</td>
-<td>13.724848</td>
-<td>33.624809</td>
-<td>25.0950</td>
-<td>18.526336</td>
-<td>5.2405</td>
-<td>5.994608</td>
-<td>3.8701</td>
-<td>3.231840</td>
-</tr>
-<tr>
-<th>52</th>
-<td>TTE</td>
-<td>Oil, Gas &amp; Consumable Fuels</td>
-<td>0</td>
-<td>2</td>
-<td>12.889465</td>
-<td>17.308594</td>
-<td>1.402556</td>
-<td>2.291144</td>
-<td>12.076052</td>
-<td>19.606511</td>
-<td>12.2300</td>
-<td>11.528460</td>
-<td>4.8575</td>
-<td>5.291562</td>
-<td>2.5326</td>
-<td>2.583363</td>
-</tr>
-<tr>
-<th>53</th>
-<td>VCTR</td>
-<td>Capital Markets</td>
-<td>2</td>
-<td>0</td>
-<td>15.310757</td>
-<td>9.886118</td>
-<td>2.033871</td>
-<td>3.593970</td>
-<td>18.838235</td>
-<td>14.925085</td>
-<td>18.6140</td>
-<td>18.037870</td>
-<td>10.2090</td>
-<td>6.703736</td>
-<td>1.7520</td>
-<td>3.699450</td>
-</tr>
-<tr>
-<th>54</th>
-<td>VICI</td>
-<td>Specialized REITs</td>
-<td>0</td>
-<td>1</td>
-<td>12.553648</td>
-<td>16.687566</td>
-<td>1.129780</td>
-<td>4.044986</td>
-<td>11.121673</td>
-<td>35.873318</td>
-<td>10.3570</td>
-<td>12.057970</td>
-<td>5.0091</td>
-<td>4.036827</td>
-<td>1.6816</td>
-<td>2.408722</td>
-</tr>
-<tr>
-<th>55</th>
-<td>VIPS</td>
-<td>Broadline Retail</td>
-<td>0</td>
-<td>1</td>
-<td>12.187500</td>
-<td>21.378707</td>
-<td>1.524761</td>
-<td>3.464575</td>
-<td>9.046392</td>
-<td>15.869916</td>
-<td>17.4720</td>
-<td>17.941000</td>
-<td>6.6863</td>
-<td>6.636944</td>
-<td>1.9382</td>
-<td>2.162371</td>
-</tr>
-<tr>
-<th>56</th>
-<td>WIT</td>
-<td>IT Services</td>
-<td>2</td>
-<td>0</td>
-<td>16.666667</td>
-<td>15.680164</td>
-<td>2.631579</td>
-<td>5.811546</td>
-<td>17.857143</td>
-<td>16.037229</td>
-<td>15.1950</td>
-<td>5.690119</td>
-<td>6.7660</td>
-<td>4.447550</td>
-<td>1.5744</td>
-<td>2.066950</td>
-</tr>
-<tr>
-<th>58</th>
-<td>YALA</td>
-<td>Interactive Media &amp; Services</td>
-<td>3</td>
-<td>0</td>
-<td>6.700935</td>
-<td>6.520878</td>
-<td>1.411417</td>
-<td>1.338458</td>
-<td>8.743902</td>
-<td>7.991114</td>
-<td>20.1960</td>
-<td>3.103894</td>
-<td>9.6197</td>
-<td>4.294181</td>
-<td>1.1072</td>
-<td>1.693500</td>
-</tr>
-<tr>
-<th>62</th>
-<td>BAC</td>
-<td>Banks</td>
-<td>2</td>
-<td>3</td>
-<td>6.863693</td>
-<td>3.586675</td>
-<td>1.440947</td>
-<td>1.602677</td>
-<td>14.538058</td>
-<td>14.143640</td>
-<td>10.1900</td>
-<td>11.839536</td>
-<td>0.9145</td>
-<td>0.992173</td>
-<td>12.3010</td>
-<td>13.243666</td>
-</tr>
-<tr>
-<th>63</th>
-<td>NVDA</td>
-<td>Semiconductors &amp; Semiconductor Equipment</td>
-<td>2</td>
-<td>0</td>
-<td>59.476341</td>
-<td>58.338129</td>
-<td>38.556237</td>
-<td>11.061652</td>
-<td>46.668317</td>
-<td>61.642997</td>
-<td>107.3600</td>
-<td>16.164014</td>
-<td>53.5280</td>
-<td>7.374922</td>
-<td>1.3554</td>
-<td>1.679246</td>
-</tr>
-<tr>
-<th>64</th>
-<td>WMT</td>
-<td>Consumer Staples Distribution &amp; Retail</td>
-<td>3</td>
-<td>0</td>
-<td>66.335079</td>
-<td>29.111370</td>
-<td>10.514523</td>
-<td>5.379078</td>
-<td>44.300699</td>
-<td>33.624809</td>
-<td>23.6610</td>
-<td>18.526336</td>
-<td>6.5385</td>
-<td>5.994608</td>
-<td>3.0039</td>
-<td>3.231840</td>
-</tr>
-<tr>
-<th>65</th>
-<td>AAT</td>
-<td>Diversified REITs</td>
-<td>1</td>
-<td>2</td>
-<td>12.127389</td>
-<td>9.354629</td>
-<td>1.015467</td>
-<td>1.086959</td>
-<td>20.695652</td>
-<td>30.228307</td>
-<td>6.4427</td>
-<td>4.779486</td>
-<td>2.0472</td>
-<td>1.980500</td>
-<td>2.5384</td>
-<td>2.376117</td>
-</tr>
-<tr>
-<th>66</th>
-<td>O</td>
-<td>Retail REITs</td>
-<td>1</td>
-<td>4</td>
-<td>15.214286</td>
-<td>16.709361</td>
-<td>1.505300</td>
-<td>1.690041</td>
-<td>59.719626</td>
-<td>33.915247</td>
-<td>2.4881</td>
-<td>4.725933</td>
-<td>2.2679</td>
-<td>3.240575</td>
-<td>1.8253</td>
-<td>1.902733</td>
 </tr>
 </tbody>
 </table>
@@ -10742,7 +9766,7 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=74b28c45-7aef-4967-8787-3ddb7bcaa261">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=90ff0303-14f3-40c7-931f-a975c1d03974">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -10750,57 +9774,9 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 <div class="jp-InputPrompt jp-InputArea-prompt">In [26]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">scanned_df</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>&lt;class 'pandas.core.frame.DataFrame'&gt;
-Index: 49 entries, 0 to 66
-Data columns (total 16 columns):
- #   Column         Non-Null Count  Dtype  
----  ------         --------------  -----  
- 0   Symbol         49 non-null     object 
- 1   Industry       49 non-null     object 
- 2   Overvaluation  49 non-null     int64  
- 3   Bad Quality    49 non-null     int64  
- 4   P/FCF          49 non-null     float64
- 5   P/FCF_mean     49 non-null     float64
- 6   P/B            49 non-null     float64
- 7   P/B_mean       49 non-null     float64
- 8   P/E            49 non-null     float64
- 9   P/E_mean       49 non-null     float64
- 10  ROE            49 non-null     float64
- 11  ROE_mean       49 non-null     float64
- 12  ROA            49 non-null     float64
- 13  ROA_mean       49 non-null     float64
- 14  A/E            49 non-null     float64
- 15  A/E_mean       49 non-null     float64
-dtypes: float64(12), int64(2), object(2)
-memory usage: 6.5+ KB
-</pre>
-</div>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=0ced51be-6dec-416c-8fad-e7b7463c167e">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [27]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">scanned_df</span><span class="o">=</span><span class="n">scanned_df</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-<span class="n">scanned_df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Rearrange columns and round numbers</span>
+<span class="n">scanned_df</span> <span class="o">=</span> <span class="n">scanned_df</span><span class="p">[[</span><span class="s1">'Symbol'</span><span class="p">,</span> <span class="s1">'Industry'</span><span class="p">,</span> <span class="s1">'Overvaluation'</span><span class="p">,</span> <span class="s1">'Bad Quality'</span><span class="p">,</span> <span class="s1">'P/FCF'</span><span class="p">,</span> <span class="s1">'P/FCF_mean'</span><span class="p">,</span> <span class="s1">'P/B'</span><span class="p">,</span> <span class="s1">'P/B_mean'</span><span class="p">,</span> <span class="s1">'P/E'</span><span class="p">,</span> <span class="s1">'P/E_mean'</span><span class="p">,</span> <span class="s1">'ROE'</span><span class="p">,</span> <span class="s1">'ROE_mean'</span><span class="p">,</span> <span class="s1">'ROA'</span><span class="p">,</span> <span class="s1">'ROA_mean'</span><span class="p">,</span> <span class="s1">'A/E'</span><span class="p">,</span> <span class="s1">'A/E_mean'</span><span class="p">]]</span>
+<span class="n">scanned_df</span>
 </pre></div>
 </div>
 </div>
@@ -10811,7 +9787,7 @@ memory usage: 6.5+ KB
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[27]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[26]:</div>
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
 <div>
 <style scoped="">
@@ -10856,18 +9832,18 @@ memory usage: 6.5+ KB
 <td>Beverages</td>
 <td>0</td>
 <td>1</td>
-<td>12.00</td>
-<td>32.69</td>
-<td>2.70</td>
-<td>6.43</td>
-<td>15.79</td>
-<td>25.42</td>
-<td>17.20</td>
-<td>19.46</td>
-<td>9.98</td>
-<td>6.96</td>
-<td>1.53</td>
-<td>3.06</td>
+<td>13.391304</td>
+<td>34.552903</td>
+<td>2.990291</td>
+<td>7.331050</td>
+<td>17.111111</td>
+<td>25.441618</td>
+<td>16.9770</td>
+<td>20.833746</td>
+<td>9.1359</td>
+<td>7.399283</td>
+<td>1.6503</td>
+<td>3.116500</td>
 </tr>
 <tr>
 <th>1</th>
@@ -10875,37 +9851,18 @@ memory usage: 6.5+ KB
 <td>Semiconductors &amp; Semiconductor Equipment</td>
 <td>1</td>
 <td>0</td>
-<td>22.95</td>
-<td>43.83</td>
-<td>2.71</td>
-<td>4.05</td>
-<td>20.95</td>
-<td>5.47</td>
-<td>13.62</td>
-<td>2.85</td>
-<td>6.40</td>
-<td>3.00</td>
-<td>1.33</td>
-<td>1.58</td>
-</tr>
-<tr>
-<th>2</th>
-<td>ACN</td>
-<td>IT Services</td>
-<td>1</td>
-<td>0</td>
-<td>13.04</td>
-<td>15.68</td>
-<td>4.80</td>
-<td>5.81</td>
-<td>19.92</td>
-<td>16.04</td>
-<td>25.02</td>
-<td>5.69</td>
-<td>11.12</td>
-<td>4.45</td>
-<td>2.10</td>
-<td>2.07</td>
+<td>23.781711</td>
+<td>41.972388</td>
+<td>2.393705</td>
+<td>4.259448</td>
+<td>21.215789</td>
+<td>6.601951</td>
+<td>11.7450</td>
+<td>4.488329</td>
+<td>5.5031</td>
+<td>3.497120</td>
+<td>1.3157</td>
+<td>1.602967</td>
 </tr>
 <tr>
 <th>3</th>
@@ -10913,18 +9870,18 @@ memory usage: 6.5+ KB
 <td>Specialty Retail</td>
 <td>2</td>
 <td>3</td>
-<td>26.85</td>
-<td>12.43</td>
-<td>2.46</td>
-<td>3.23</td>
-<td>20.37</td>
-<td>15.20</td>
-<td>12.36</td>
-<td>17.68</td>
-<td>4.65</td>
-<td>5.47</td>
-<td>2.58</td>
-<td>3.62</td>
+<td>28.352273</td>
+<td>12.503691</td>
+<td>2.601668</td>
+<td>4.226069</td>
+<td>21.508621</td>
+<td>17.785483</td>
+<td>12.3620</td>
+<td>16.967035</td>
+<td>4.6518</td>
+<td>5.291223</td>
+<td>2.5778</td>
+<td>3.719148</td>
 </tr>
 <tr>
 <th>5</th>
@@ -10932,18 +9889,912 @@ memory usage: 6.5+ KB
 <td>Specialty Retail</td>
 <td>1</td>
 <td>0</td>
-<td>20.30</td>
-<td>12.43</td>
-<td>1.78</td>
-<td>3.23</td>
-<td>10.48</td>
-<td>15.20</td>
+<td>20.872792</td>
+<td>12.503691</td>
+<td>1.835042</td>
+<td>4.226069</td>
+<td>10.779197</td>
+<td>17.785483</td>
+<td>18.3410</td>
+<td>16.967035</td>
+<td>5.8257</td>
+<td>5.291223</td>
+<td>2.5225</td>
+<td>3.719148</td>
+</tr>
+<tr>
+<th>6</th>
+<td>ATKR</td>
+<td>Electrical Equipment</td>
+<td>1</td>
+<td>5</td>
+<td>11.521589</td>
+<td>5.832914</td>
+<td>1.602065</td>
+<td>3.565588</td>
+<td>-48.693431</td>
+<td>-1.509351</td>
+<td>-3.1914</td>
+<td>10.471400</td>
+<td>4.3055</td>
+<td>5.112980</td>
+<td>1.9844</td>
+<td>1.827633</td>
+</tr>
+<tr>
+<th>8</th>
+<td>CHA</td>
+<td>Hotels, Restaurants &amp; Leisure</td>
+<td>3</td>
+<td>0</td>
+<td>5.960452</td>
+<td>5.614599</td>
+<td>1.688000</td>
+<td>1.365520</td>
+<td>13.525641</td>
+<td>8.944091</td>
+<td>30.7320</td>
+<td>2.025403</td>
+<td>14.3400</td>
+<td>3.335877</td>
+<td>1.4061</td>
+<td>1.913462</td>
+</tr>
+<tr>
+<th>9</th>
+<td>CHRD</td>
+<td>Oil, Gas &amp; Consumable Fuels</td>
+<td>2</td>
+<td>3</td>
+<td>6.976080</td>
+<td>4.473771</td>
+<td>0.739470</td>
+<td>1.932094</td>
+<td>35.469595</td>
+<td>14.391782</td>
+<td>2.0252</td>
+<td>9.519979</td>
+<td>4.6720</td>
+<td>4.259104</td>
+<td>1.6222</td>
+<td>2.039978</td>
+</tr>
+<tr>
+<th>10</th>
+<td>CNR</td>
+<td>Oil, Gas &amp; Consumable Fuels</td>
+<td>1</td>
+<td>5</td>
+<td>219.463415</td>
+<td>4.473771</td>
+<td>1.254601</td>
+<td>1.932094</td>
+<td>-30.194631</td>
+<td>14.391782</td>
+<td>-5.8407</td>
+<td>9.519979</td>
+<td>-2.8828</td>
+<td>4.259104</td>
+<td>1.6666</td>
+<td>2.039978</td>
+</tr>
+<tr>
+<th>11</th>
+<td>COP</td>
+<td>Oil, Gas &amp; Consumable Fuels</td>
+<td>1</td>
+<td>0</td>
+<td>19.306228</td>
+<td>16.805736</td>
+<td>2.119871</td>
+<td>2.245522</td>
+<td>17.573228</td>
+<td>19.320002</td>
+<td>12.3570</td>
+<td>11.895705</td>
+<td>6.2822</td>
+<td>5.390427</td>
+<td>1.8909</td>
+<td>2.622451</td>
+</tr>
+<tr>
+<th>12</th>
+<td>CRUS</td>
+<td>Semiconductors &amp; Semiconductor Equipment</td>
+<td>1</td>
+<td>0</td>
+<td>11.919286</td>
+<td>41.972388</td>
+<td>3.401794</td>
+<td>4.259448</td>
+<td>18.556878</td>
+<td>6.601951</td>
+<td>19.8660</td>
+<td>4.488329</td>
+<td>11.8270</td>
+<td>3.497120</td>
+<td>1.1680</td>
+<td>1.602967</td>
+</tr>
+<tr>
+<th>14</th>
+<td>CVE</td>
+<td>Oil, Gas &amp; Consumable Fuels</td>
+<td>1</td>
+<td>3</td>
+<td>20.837838</td>
+<td>16.805736</td>
+<td>2.007812</td>
+<td>2.245522</td>
+<td>18.804878</td>
+<td>19.320002</td>
+<td>10.8360</td>
+<td>11.895705</td>
+<td>4.7989</td>
+<td>5.390427</td>
+<td>1.8957</td>
+<td>2.622451</td>
+</tr>
+<tr>
+<th>15</th>
+<td>DDI</td>
+<td>Entertainment</td>
+<td>1</td>
+<td>0</td>
+<td>3.200000</td>
+<td>6.010389</td>
+<td>0.458811</td>
+<td>0.539069</td>
+<td>4.251208</td>
+<td>-8.891510</td>
+<td>11.4540</td>
+<td>9.992800</td>
+<td>8.1522</td>
+<td>3.162925</td>
+<td>1.0951</td>
+<td>1.512909</td>
+</tr>
+<tr>
+<th>16</th>
+<td>DOX</td>
+<td>IT Services</td>
+<td>2</td>
+<td>0</td>
+<td>10.163028</td>
+<td>8.760104</td>
+<td>2.202524</td>
+<td>2.574809</td>
+<td>13.504836</td>
+<td>1.915529</td>
+<td>16.4790</td>
+<td>4.558455</td>
+<td>8.2134</td>
+<td>3.375492</td>
+<td>1.8534</td>
+<td>2.563044</td>
+</tr>
+<tr>
+<th>17</th>
+<td>FHI</td>
+<td>Capital Markets</td>
+<td>1</td>
+<td>0</td>
+<td>16.120588</td>
+<td>9.735224</td>
+<td>3.379162</td>
+<td>3.508437</td>
+<td>10.684211</td>
+<td>14.428430</td>
+<td>34.3050</td>
+<td>19.315326</td>
+<td>14.8900</td>
+<td>6.894090</td>
+<td>1.8625</td>
+<td>2.646500</td>
+</tr>
+<tr>
+<th>18</th>
+<td>FINV</td>
+<td>Consumer Finance</td>
+<td>1</td>
+<td>0</td>
+<td>5.720000</td>
+<td>4.616046</td>
+<td>0.622416</td>
+<td>1.074258</td>
+<td>3.813333</td>
+<td>5.948087</td>
+<td>17.7870</td>
+<td>13.547153</td>
+<td>18.5440</td>
+<td>7.620585</td>
+<td>1.6033</td>
+<td>3.502494</td>
+</tr>
+<tr>
+<th>21</th>
+<td>GIII</td>
+<td>Textiles, Apparel &amp; Luxury Goods</td>
+<td>0</td>
+<td>2</td>
+<td>3.711268</td>
+<td>15.756548</td>
+<td>0.745579</td>
+<td>2.119488</td>
+<td>9.669725</td>
+<td>26.436858</td>
+<td>8.6143</td>
+<td>5.753114</td>
+<td>4.9313</td>
+<td>3.898613</td>
+<td>1.5419</td>
+<td>2.421825</td>
+</tr>
+<tr>
+<th>22</th>
+<td>GMAB</td>
+<td>Biotechnology</td>
+<td>1</td>
+<td>0</td>
+<td>1.587912</td>
+<td>2.359206</td>
+<td>0.303955</td>
+<td>7.069421</td>
+<td>1.880286</td>
+<td>-5.340315</td>
+<td>16.5800</td>
+<td>2.060027</td>
+<td>7.7833</td>
+<td>-3.854700</td>
+<td>2.2016</td>
+<td>1.554183</td>
+</tr>
+<tr>
+<th>23</th>
+<td>GSL</td>
+<td>Marine Transportation</td>
+<td>1</td>
+<td>0</td>
+<td>9.807500</td>
+<td>4.432209</td>
+<td>0.817292</td>
+<td>0.856339</td>
+<td>3.521544</td>
+<td>10.351542</td>
+<td>26.1840</td>
+<td>6.993533</td>
+<td>10.1190</td>
+<td>3.585256</td>
+<td>1.5538</td>
+<td>1.861936</td>
+</tr>
+<tr>
+<th>24</th>
+<td>HAFN</td>
+<td>Oil, Gas &amp; Consumable Fuels</td>
+<td>1</td>
+<td>0</td>
+<td>6.941748</td>
+<td>4.473771</td>
+<td>1.527778</td>
+<td>1.932094</td>
+<td>11.721311</td>
+<td>14.391782</td>
+<td>13.0360</td>
+<td>9.519979</td>
+<td>5.6698</td>
+<td>4.259104</td>
+<td>1.5318</td>
+<td>2.039978</td>
+</tr>
+<tr>
+<th>27</th>
+<td>KOF</td>
+<td>Beverages</td>
+<td>1</td>
+<td>1</td>
+<td>64.797688</td>
+<td>34.552903</td>
+<td>3.051170</td>
+<td>7.331050</td>
+<td>18.257329</td>
+<td>25.441618</td>
+<td>16.5660</td>
+<td>20.833746</td>
+<td>7.6811</td>
+<td>7.399283</td>
+<td>2.2302</td>
+<td>3.116500</td>
+</tr>
+<tr>
+<th>28</th>
+<td>LX</td>
+<td>Consumer Finance</td>
+<td>0</td>
+<td>1</td>
+<td>4.391304</td>
+<td>4.616046</td>
+<td>0.311088</td>
+<td>1.074258</td>
+<td>2.104167</td>
+<td>5.948087</td>
+<td>16.4120</td>
+<td>13.547153</td>
+<td>5.3789</td>
+<td>7.620585</td>
+<td>1.9508</td>
+<td>3.502494</td>
+</tr>
+<tr>
+<th>30</th>
+<td>MOMO</td>
+<td>Interactive Media &amp; Services</td>
+<td>2</td>
+<td>1</td>
+<td>9.333333</td>
+<td>6.093726</td>
+<td>0.642715</td>
+<td>1.247408</td>
+<td>10.733333</td>
+<td>7.360424</td>
+<td>6.7157</td>
+<td>2.604111</td>
+<td>5.0331</td>
+<td>1.994806</td>
+<td>1.2261</td>
+<td>1.668063</td>
+</tr>
+<tr>
+<th>33</th>
+<td>ON</td>
+<td>Semiconductors &amp; Semiconductor Equipment</td>
+<td>1</td>
+<td>3</td>
+<td>19.736232</td>
+<td>56.758885</td>
+<td>3.520683</td>
+<td>10.817556</td>
+<td>234.793103</td>
+<td>64.720222</td>
+<td>1.4976</td>
+<td>13.649394</td>
+<td>5.0006</td>
+<td>7.643689</td>
+<td>1.6322</td>
+<td>1.739989</td>
+</tr>
+<tr>
+<th>34</th>
+<td>OVV</td>
+<td>Oil, Gas &amp; Consumable Fuels</td>
+<td>1</td>
+<td>3</td>
+<td>-16.398058</td>
+<td>16.805736</td>
+<td>1.254208</td>
+<td>2.245522</td>
+<td>56.300000</td>
+<td>19.320002</td>
+<td>2.2595</td>
+<td>11.895705</td>
+<td>6.5610</td>
+<td>5.390427</td>
+<td>1.8945</td>
+<td>2.622451</td>
+</tr>
+<tr>
+<th>36</th>
+<td>PDS</td>
+<td>Energy Equipment &amp; Services</td>
+<td>2</td>
+<td>3</td>
+<td>10.966912</td>
+<td>-0.269591</td>
+<td>1.002801</td>
+<td>1.430436</td>
+<td>894.900000</td>
+<td>15.977294</td>
+<td>0.1891</td>
+<td>5.880512</td>
+<td>3.7768</td>
+<td>3.381845</td>
+<td>1.7213</td>
+<td>2.201784</td>
+</tr>
+<tr>
+<th>38</th>
+<td>RAL</td>
+<td>Electronic Equipment, Instruments &amp; Components</td>
+<td>0</td>
+<td>5</td>
+<td>13.770440</td>
+<td>23.659276</td>
+<td>3.024171</td>
+<td>3.289797</td>
+<td>-4.039668</td>
+<td>29.040654</td>
+<td>-45.3020</td>
+<td>8.533508</td>
+<td>3.7861</td>
+<td>4.202036</td>
+<td>2.3384</td>
+<td>2.308232</td>
+</tr>
+<tr>
+<th>39</th>
+<td>RWAY</td>
+<td>Capital Markets</td>
+<td>1</td>
+<td>0</td>
+<td>1.734021</td>
+<td>-1.010862</td>
+<td>0.620664</td>
+<td>1.338146</td>
+<td>5.682432</td>
+<td>8.658652</td>
+<td>11.0150</td>
+<td>8.718488</td>
+<td>6.3578</td>
+<td>4.516265</td>
+<td>1.9679</td>
+<td>2.218410</td>
+</tr>
+<tr>
+<th>40</th>
+<td>SCVL</td>
+<td>Specialty Retail</td>
+<td>2</td>
+<td>2</td>
+<td>15.875969</td>
+<td>13.351062</td>
+<td>0.820513</td>
+<td>1.720090</td>
+<td>9.752381</td>
+<td>9.413139</td>
+<td>8.7772</td>
+<td>3.519474</td>
+<td>3.7720</td>
+<td>2.565464</td>
+<td>1.7163</td>
+<td>2.612145</td>
+</tr>
+<tr>
+<th>41</th>
+<td>SFD</td>
+<td>Food Products</td>
+<td>1</td>
+<td>0</td>
+<td>20.666667</td>
+<td>14.128705</td>
+<td>1.507599</td>
+<td>2.080830</td>
+<td>11.121076</td>
+<td>18.745232</td>
+<td>14.0250</td>
+<td>10.690846</td>
+<td>6.9397</td>
+<td>5.405308</td>
+<td>1.7821</td>
+<td>2.259379</td>
+</tr>
+<tr>
+<th>43</th>
+<td>STNG</td>
+<td>Oil, Gas &amp; Consumable Fuels</td>
+<td>1</td>
+<td>1</td>
+<td>6.866351</td>
+<td>4.473771</td>
+<td>1.066706</td>
+<td>1.932094</td>
+<td>10.304410</td>
+<td>14.391782</td>
+<td>11.3540</td>
+<td>9.519979</td>
+<td>4.9941</td>
+<td>4.259104</td>
+<td>1.2247</td>
+<td>2.039978</td>
+</tr>
+<tr>
+<th>45</th>
+<td>TGNA</td>
+<td>Media</td>
+<td>2</td>
+<td>0</td>
+<td>7.845865</td>
+<td>-26.765660</td>
+<td>1.078553</td>
+<td>2.229333</td>
+<td>9.938095</td>
+<td>3.176635</td>
+<td>11.4490</td>
+<td>-12.583971</td>
+<td>5.3289</td>
+<td>2.615343</td>
+<td>2.1845</td>
+<td>3.842671</td>
+</tr>
+<tr>
+<th>46</th>
+<td>TGT</td>
+<td>Consumer Staples Distribution &amp; Retail</td>
+<td>0</td>
+<td>1</td>
+<td>17.497731</td>
+<td>30.827376</td>
+<td>3.378907</td>
+<td>6.684902</td>
+<td>14.019394</td>
+<td>35.012539</td>
+<td>25.0950</td>
+<td>19.287770</td>
+<td>5.2405</td>
+<td>5.990936</td>
+<td>3.8701</td>
+<td>3.366567</td>
+</tr>
+<tr>
+<th>49</th>
+<td>TTE</td>
+<td>Oil, Gas &amp; Consumable Fuels</td>
+<td>1</td>
+<td>3</td>
+<td>16.846320</td>
+<td>16.805736</td>
+<td>1.451781</td>
+<td>2.245522</td>
+<td>13.465398</td>
+<td>19.320002</td>
+<td>11.2350</td>
+<td>11.895705</td>
+<td>4.3782</td>
+<td>5.390427</td>
+<td>2.5335</td>
+<td>2.622451</td>
+</tr>
+<tr>
+<th>50</th>
+<td>VCTR</td>
+<td>Capital Markets</td>
+<td>2</td>
+<td>1</td>
+<td>15.135458</td>
+<td>9.735224</td>
+<td>2.010585</td>
+<td>3.508437</td>
+<td>18.622549</td>
+<td>14.428430</td>
+<td>18.6140</td>
+<td>19.315326</td>
+<td>10.2090</td>
+<td>6.894090</td>
+<td>1.7520</td>
+<td>2.646500</td>
+</tr>
+<tr>
+<th>52</th>
+<td>WIT</td>
+<td>IT Services</td>
+<td>1</td>
+<td>0</td>
+<td>14.933333</td>
+<td>13.941795</td>
+<td>2.357895</td>
+<td>4.419671</td>
+<td>16.000000</td>
+<td>19.154579</td>
+<td>15.1950</td>
+<td>5.938571</td>
+<td>6.7660</td>
+<td>4.606106</td>
+<td>1.5744</td>
+<td>1.996400</td>
+</tr>
+<tr>
+<th>54</th>
+<td>YALA</td>
+<td>Interactive Media &amp; Services</td>
+<td>3</td>
+<td>0</td>
+<td>6.738318</td>
+<td>6.093726</td>
+<td>1.419291</td>
+<td>1.247408</td>
+<td>8.792683</td>
+<td>7.360424</td>
+<td>20.1960</td>
+<td>2.604111</td>
+<td>9.6197</td>
+<td>1.994806</td>
+<td>1.1072</td>
+<td>1.668063</td>
+</tr>
+<tr>
+<th>55</th>
+<td>YRD</td>
+<td>Consumer Finance</td>
+<td>0</td>
+<td>1</td>
+<td>1.871921</td>
+<td>4.616046</td>
+<td>0.227818</td>
+<td>1.074258</td>
+<td>1.871921</td>
+<td>5.948087</td>
+<td>12.7790</td>
+<td>13.547153</td>
+<td>11.9030</td>
+<td>7.620585</td>
+<td>1.4938</td>
+<td>3.502494</td>
+</tr>
+<tr>
+<th>58</th>
+<td>BAC</td>
+<td>Banks</td>
+<td>2</td>
+<td>3</td>
+<td>6.539033</td>
+<td>0.891414</td>
+<td>1.372789</td>
+<td>1.575063</td>
+<td>13.850394</td>
+<td>13.734034</td>
+<td>10.1900</td>
+<td>12.064733</td>
+<td>0.9145</td>
+<td>1.043531</td>
+<td>12.3010</td>
+<td>13.173720</td>
+</tr>
+<tr>
+<th>59</th>
+<td>NVDA</td>
+<td>Semiconductors &amp; Semiconductor Equipment</td>
+<td>2</td>
+<td>0</td>
+<td>59.274448</td>
+<td>56.758885</td>
+<td>38.425358</td>
+<td>10.817556</td>
+<td>46.509901</td>
+<td>64.720222</td>
+<td>107.3600</td>
+<td>13.649394</td>
+<td>53.5280</td>
+<td>7.643689</td>
+<td>1.3554</td>
+<td>1.739989</td>
+</tr>
+<tr>
+<th>60</th>
+<td>WMT</td>
+<td>Consumer Staples Distribution &amp; Retail</td>
+<td>3</td>
+<td>0</td>
+<td>65.376963</td>
+<td>30.827376</td>
+<td>10.362656</td>
+<td>6.684902</td>
+<td>43.660839</td>
+<td>35.012539</td>
+<td>23.6610</td>
+<td>19.287770</td>
+<td>6.5385</td>
+<td>5.990936</td>
+<td>3.0039</td>
+<td>3.366567</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=74b28c45-7aef-4967-8787-3ddb7bcaa261">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [27]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">scanned_df</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>&lt;class 'pandas.DataFrame'&gt;
+Index: 40 entries, 0 to 60
+Data columns (total 16 columns):
+ #   Column         Non-Null Count  Dtype  
+---  ------         --------------  -----  
+ 0   Symbol         40 non-null     str    
+ 1   Industry       40 non-null     str    
+ 2   Overvaluation  40 non-null     int64  
+ 3   Bad Quality    40 non-null     int64  
+ 4   P/FCF          40 non-null     float64
+ 5   P/FCF_mean     40 non-null     float64
+ 6   P/B            40 non-null     float64
+ 7   P/B_mean       40 non-null     float64
+ 8   P/E            40 non-null     float64
+ 9   P/E_mean       40 non-null     float64
+ 10  ROE            40 non-null     float64
+ 11  ROE_mean       40 non-null     float64
+ 12  ROA            40 non-null     float64
+ 13  ROA_mean       40 non-null     float64
+ 14  A/E            40 non-null     float64
+ 15  A/E_mean       40 non-null     float64
+dtypes: float64(12), int64(2), str(2)
+memory usage: 5.3 KB
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=0ced51be-6dec-416c-8fad-e7b7463c167e">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [28]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">scanned_df</span><span class="o">=</span><span class="n">scanned_df</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">scanned_df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child jp-OutputArea-executeResult">
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[28]:</div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>Symbol</th>
+<th>Industry</th>
+<th>Overvaluation</th>
+<th>Bad Quality</th>
+<th>P/FCF</th>
+<th>P/FCF_mean</th>
+<th>P/B</th>
+<th>P/B_mean</th>
+<th>P/E</th>
+<th>P/E_mean</th>
+<th>ROE</th>
+<th>ROE_mean</th>
+<th>ROA</th>
+<th>ROA_mean</th>
+<th>A/E</th>
+<th>A/E_mean</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>0</th>
+<td>ABEV</td>
+<td>Beverages</td>
+<td>0</td>
+<td>1</td>
+<td>13.39</td>
+<td>34.55</td>
+<td>2.99</td>
+<td>7.33</td>
+<td>17.11</td>
+<td>25.44</td>
+<td>16.98</td>
+<td>20.83</td>
+<td>9.14</td>
+<td>7.40</td>
+<td>1.65</td>
+<td>3.12</td>
+</tr>
+<tr>
+<th>1</th>
+<td>ACLS</td>
+<td>Semiconductors &amp; Semiconductor Equipment</td>
+<td>1</td>
+<td>0</td>
+<td>23.78</td>
+<td>41.97</td>
+<td>2.39</td>
+<td>4.26</td>
+<td>21.22</td>
+<td>6.60</td>
+<td>11.74</td>
+<td>4.49</td>
+<td>5.50</td>
+<td>3.50</td>
+<td>1.32</td>
+<td>1.60</td>
+</tr>
+<tr>
+<th>3</th>
+<td>AEO</td>
+<td>Specialty Retail</td>
+<td>2</td>
+<td>3</td>
+<td>28.35</td>
+<td>12.50</td>
+<td>2.60</td>
+<td>4.23</td>
+<td>21.51</td>
+<td>17.79</td>
+<td>12.36</td>
+<td>16.97</td>
+<td>4.65</td>
+<td>5.29</td>
+<td>2.58</td>
+<td>3.72</td>
+</tr>
+<tr>
+<th>5</th>
+<td>ASO</td>
+<td>Specialty Retail</td>
+<td>1</td>
+<td>0</td>
+<td>20.87</td>
+<td>12.50</td>
+<td>1.84</td>
+<td>4.23</td>
+<td>10.78</td>
+<td>17.79</td>
 <td>18.34</td>
-<td>17.68</td>
+<td>16.97</td>
 <td>5.83</td>
-<td>5.47</td>
+<td>5.29</td>
 <td>2.52</td>
-<td>3.62</td>
+<td>3.72</td>
+</tr>
+<tr>
+<th>6</th>
+<td>ATKR</td>
+<td>Electrical Equipment</td>
+<td>1</td>
+<td>5</td>
+<td>11.52</td>
+<td>5.83</td>
+<td>1.60</td>
+<td>3.57</td>
+<td>-48.69</td>
+<td>-1.51</td>
+<td>-3.19</td>
+<td>10.47</td>
+<td>4.31</td>
+<td>5.11</td>
+<td>1.98</td>
+<td>1.83</td>
 </tr>
 </tbody>
 </table>
@@ -10979,7 +10830,7 @@ memory usage: 6.5+ KB
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [28]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [29]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1">#import xlsxwriter</span>
