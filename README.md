@@ -52,8 +52,11 @@ Stocks that meet the preliminary criteria are then ranked based on these bonus s
 - Quartile Calculations: Quartiles (Q1, Q3) are calculated for each fundamental indicator, and outliers are identified based on the upper and lower bounds.
 - Mean Calculations: The mean of each fundamental metric is calculated for stocks within each industry and market cap category (Large Cap, Mid Cap, Small Cap). The means are calculated without outliers to ensure that the results reflect the central tendency of the data.  
 - Standard Deviation and Z-score Calculations: Z-scores for individual fundamentals are used to compare a stock’s performance against the industry average or specific peers.
-  - P/FCF, P/B, A/E, P/E → negative z-score that is further from 0 is preferred
-  - ROE, ROA → positive z-score that is further from 0 is preferred
+
+| Metric               | Preferred z-score direction | Interpretation |
+|----------------------|---|---|
+| P/FCF, P/B, A/E, P/E | Negative | Lower valuation relative to peers |
+| ROE, ROA             | Positive | Higher profitability relative to peers |
 
 ### Exit Signals Framework
 
@@ -77,26 +80,26 @@ Refer to `Exit Signals.pdf` for detailed explanation and instructions.
 
 ### Pipeline for Undervalued Stock Scanning
 1. Raw stock data is downloaded from the Thinkorswim scanner.
-11 CSV files (one per sector) are saved in `\Downloaded CSV Files`.
+11 CSV files (one per sector) are saved in `\Downloaded CSV Files\`.
 2. `etl.py` processes the raw CSV files. Outputs:
-   - 11 filtered Excel workbooks in `\Results`. Each of these workbooks contains data of stocks that passed the preliminary conditions. 
-   - 11 industry mean workbooks in `\Industry Means`
-3. Interactive Power BI dashboard presents data from the Excel workbooks in `\Results` and in `\Industry Means`.
+   - 11 filtered Excel workbooks in `\Results\`. Each of these workbooks contains data of stocks that passed the preliminary conditions. 
+   - 11 industry mean workbooks in `\Industry Means\`
+3. Interactive Power BI dashboard presents data from the Excel workbooks in `\Results\` and in `\Industry Means\`.
 
 ### Pipeline for Exit Signals
-1. The position statement is downloaded from Thinkorswim and saved in `\Position Statement`.
-2. `exit_signals.py` processes the position statement and raw data from `\Downloaded CSV Files`, then applies exit signal logic and filters for stocks with at least 1 exit signal.
-The final output is a formatted Excel file saved in `\Exit Signals\Scannable`.
+1. The position statement is downloaded from Thinkorswim and saved in `\Position Statement\`.
+2. `exit_signals.py` processes the position statement and raw data from `\Downloaded CSV Files\`, then applies exit signal logic and filters for stocks with at least 1 exit signal.
+The final output is a formatted Excel file saved in `\Exit Signals\Scannable\`.
 3. Exit Signals.pbix presents categorized red flags.
 
 ### Pipeline for Stock Snapshot
 1. stock_snapshot.py retrieves fundamental metrics across sectors and market caps.
 2. User inputs a list of selected stocks.
-3. Filtered Excel output is saved in `\Selected Stock Snapshots`
+3. Filtered Excel output is saved in `\Selected Stock Snapshots\`
 
 ## Project Folders and Files
 
-``Undervalued Stock Scanner`` contains the following folders and files:
+``\Undervalued Stock Scanner\`` contains the following folders and files:
 
 ```bash
 Undervalued Stock Scanner\
@@ -106,7 +109,7 @@ Undervalued Stock Scanner\
 ├── Industry Means\                    # Folder containing all industry mean calculation outputs (.xlsx files) from etl.py
 ├── Position Statement\                # Folder containing the current position statement (.csv file) downloaded from Thinkorswim
 ├── Exit Signals\                      # Folder containing exit signal output files exported from exit_signals.py
-├── Selected Stock Snapshot\           # Folder containing a sample snapshot of selected stocks and their metrics
+├── Selected Stock Snapshots\           # Folder containing a sample snapshot of selected stocks and their metrics
 ├── SCRIPTS\                           # Package folder containing all Python scripts
 │   ├── etl.py                              # Python script for scanning undervalued stocks
 │   ├── exit_signals.py                     # Python script for exit signals detection
@@ -122,7 +125,7 @@ Undervalued Stock Scanner\
 ├── Table Schema.xlsx                            # An outline of the structure of tables
 └── requirements.txt                             # Required Python libraries
 ```
-Note: The position statement CSV file in `Position Statement\` is masked to ensure personal and financial information security.
+**Note: The position statement CSV file in `\Position Statement\` is masked to ensure personal and financial information security.**
 
 ## Usage
 
@@ -131,12 +134,12 @@ Note: The position statement CSV file in `Position Statement\` is masked to ensu
    - Extract locally to create the Undervalued Stock Scanner folder.
 2. Update raw data
    - Download fresh CSV files from Thinkorswim. 
-   - Replace files inside \Downloaded CSV Files.
-3. Run processing scripts in `SCRIPTS\`
+   - Replace files inside `\Downloaded CSV Files\`.
+3. Run processing scripts in `\SCRIPTS\`
     From project terminal:
     ```
     py -m SCRIPTS.etl
-    py -m SCRIPTS.exit_signal
+    py -m SCRIPTS.exit_signals
     py -m SCRIPTS.stock_snapshot
     ```
 4. Open Power BI dashboard 
