@@ -109,7 +109,7 @@ Undervalued Stock Scanner\
 ├── Industry Means\                    # Folder containing all industry mean calculation outputs (.xlsx files) from etl.py
 ├── Position Statement\                # Folder containing the current position statement (.csv file) downloaded from Thinkorswim
 ├── Exit Signals\                      # Folder containing exit signal output files exported from exit_signals.py
-├── Selected Stock Snapshots\           # Folder containing a sample snapshot of selected stocks and their metrics
+├── Selected Stock Snapshots\          # Folder containing a sample snapshot of selected stocks and their metrics
 ├── SCRIPTS\                           # Package folder containing all Python scripts
 │   ├── etl.py                              # Python script for scanning undervalued stocks
 │   ├── exit_signals.py                     # Python script for exit signals detection
@@ -117,13 +117,14 @@ Undervalued Stock Scanner\
 ├── POWER BI\                          # Folder containing dashboards
 │   ├── Undervalued Stocks Scanner.pbix     # Undervalued stock valuation dashboard
 │   └── Exit Signals.pbix                   # Exit monitoring dashboard
+├── requirements.txt                             # Required Python libraries
 ├── Instructions.pdf                             # User instructions
 ├── Conceptual Framework.pdf                     # Detailed explanation of the project's logic and methodology
 ├── Exit Signal Framework.pdf                    # Exit logic documentation
+├── Table Schema.xlsx                            # An outline of the structure of tables
 ├── Draft_Undervalued Stock Scanner ETL.html     # HTML export of the Jupyter Notebook used to develop etl.py
 ├── Draft_Exit Signals.html                      # HTML export of the Jupyter Notebook used to develop exit_signals.py
-├── Table Schema.xlsx                            # An outline of the structure of tables
-└── requirements.txt                             # Required Python libraries
+└── Batch Processing\                  # Folder containing .bat files for simpler script execution in Windows
 ```
 **Note: The position statement CSV file in `\Position Statement\` is masked to ensure personal and financial information security.**
 
