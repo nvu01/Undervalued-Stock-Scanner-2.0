@@ -140,14 +140,15 @@ Undervalued Stock Scanner\
    - Set up the scanner on Thinkorswim as instructed in `Instructions.pdf`.
    - Download new CSV files from Thinkorswim. 
    - Replace files inside `\Downloaded CSV Files\`.
-3. Run processing scripts in `\SCRIPTS\`
+3. Download position statement as instructed in `Instructions.pdf`
+4. Run processing scripts in `\SCRIPTS\`
     From project terminal:
     ```
     py -m SCRIPTS.etl
     py -m SCRIPTS.exit_signals
     py -m SCRIPTS.stock_snapshot
     ```
-4. Open Power BI dashboard 
+5. Open Power BI dashboard 
    - Open `Undervalued Stock Scanner.pbix` or `Exit Signals.pbix`
    - Update folder path parameter if needed.  
    - Click **Refresh** in the **Home** tab 
