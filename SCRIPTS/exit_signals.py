@@ -15,6 +15,7 @@ def get_current_pos():
     folder_path = os.path.join(project_root, 'Position Statement')
     files = glob.glob(os.path.join(folder_path, "*"))
     filepath = max(files, key=os.path.getmtime)
+    filename = os.path.splitext(os.path.basename(filepath))[0]
 
     with open(filepath) as f:
         lines = f.readlines()
@@ -42,14 +43,15 @@ def get_current_pos():
     df = df[['Instrument']]
     df.rename(columns={'Instrument': 'Symbol'}, inplace=True)
 
-    return df
+    return df, filename
 
-def get_all_stock_data(all_files, metric_cols, pos):
+def get_all_stock_data(all_files):
     '''
     Apply data_cleaning() function from etl.py to process all the files in "Downloaded CSV Files" folder
     Apply get_grouped_stats() function from etl.py to generate stats columns
     Filter only for stocks in current position statement
     '''
+    metric_cols = ['P/FCF', 'P/B', 'ROE', 'ROA', 'A/E', 'P/E']
     # Get all stock data and stats
     dfs = []
     for i, file in enumerate(all_files):
@@ -58,12 +60,9 @@ def get_all_stock_data(all_files, metric_cols, pos):
         dfs.append(df_with_stats)
 
     full_df = pd.concat(dfs, ignore_index=True)
-    full_df.drop(columns=full_df.filter(like='_std').columns, axis=1, inplace=True)     # Remove std columns
+    full_df.drop(columns=full_df.filter(like='_std').columns, inplace=True)     # Remove std columns
 
-    # Filter for current positions
-    merged_df = pd.merge(pos, full_df, how='left', on='Symbol')
-
-    return merged_df
+    return full_df
 
 def scan(df):
     '''
@@ -73,9 +72,9 @@ def scan(df):
     - Select only stocks that have at least one signal
     '''
     # Scan for active stocks that are no longer in the scanner due to their Market Cap being out of range (250M - 2B)
-    out_of_scanner = df.loc[df['Market Cap Group'].isna(), 'Symbol']
+    out_of_scanner = df.loc[df['Current Price'].isna(), 'Symbol']
 
-    scanned_df = df.loc[~df['Market Cap Group'].isna(), :].copy()
+    scanned_df = df.loc[~df['Current Price'].isna(), :].copy()
 
     # Create "Overvaluation" column
     scanned_df['Overvaluation'] = 0
@@ -208,22 +207,26 @@ def main():
     '''
     Create a pipeline to process raw data
     '''
-    metric_cols = ['P/FCF', 'P/B', 'ROE', 'ROA', 'A/E', 'P/E']
+
     all_files, _, project_root = get_files()
-    pos = get_current_pos()
-    df = get_all_stock_data(all_files, metric_cols, pos)
-    out_of_scanner, scanned_df = scan(df)
+    pos, filename = get_current_pos()
+    full_df = get_all_stock_data(all_files)
+    # Filter for current positions
+    merged_df = pd.merge(pos, full_df, how='left', on='Symbol')
+    # Scan for exit signals
+    out_of_scanner, scanned_df = scan(merged_df)
 
     # Save files
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
 
-    unscannable_folder = os.path.join(project_root, 'Exit Signals', 'Unscannable', f'{timestamp}_OutOfScanner.xlsx')
-    out_of_scanner.to_excel(unscannable_folder, index=False)
+    unscannable_path = os.path.join(project_root, 'Exit Signals', 'Unscannable', f'{timestamp}_OutOfScanner.xlsx')
+    out_of_scanner.to_excel(unscannable_path, index=False)
 
     scannable_path = os.path.join(project_root, 'Exit Signals', 'Scannable', f'{timestamp}_ExitSignals.xlsx')
     out_put(scanned_df, scannable_path)
 
-    print('File processing completed')
+    print(f'Input position statement: {filename}')
+    print (f'Outputs: \n {scannable_path} \n {unscannable_path}')
 
 if __name__ == "__main__":
     main()

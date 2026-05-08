@@ -45,9 +45,9 @@ def data_cleaning(file):
     # Make sure metric columns are in the right format before converting them to float
     columns = ['Free CF', 'BVPS', 'EPS', 'ROE', 'ROA', 'A/E']
     for col in columns:
-        if df[col].dtypes == 'object':
+        if df[col].dtypes == 'str':
             df[col] = df[col].str.replace('[$),]', '', regex=True)
-            df[col] = df[col].str.replace('(', '-', regex=False)
+            df[col] = df[col].str.replace('(', '-', regex=False)   # Negative numbers will have a minus "-" in front, instead of a "()" pair
             df[col] = df[col].replace('<empty>', np.nan)
     # Convert numeric columns to the appropriate datatypes
     df = df.astype({'Market Cap (M)':'int64','Free CF':'float64', 'BVPS':'float64', 'EPS':'float64', 'ROE':'float64', 'ROA':'float64', 'A/E':'float64'})
@@ -135,8 +135,8 @@ def get_scores(df, cols):
     df.loc[df['P/E'] < df['P/E_mean'], 'Score'] += 1
     df.loc[df['P/E'].between(1, 25), 'Score'] += 1
 
-    df.drop(columns=df.filter(like='_std').columns, axis=1, inplace=True)
-    df.drop(columns=df.filter(like='_mean').columns, axis=1, inplace=True)
+    df.drop(columns=df.filter(like='_std').columns, inplace=True)
+    df.drop(columns=df.filter(like='_mean').columns, inplace=True)
     return df
 
 def main():
@@ -154,7 +154,7 @@ def main():
         stats, df_with_stats = get_grouped_stats(df, metric_cols)
         scanned_df = scan(df_with_stats)
         scored_df = get_scores(scanned_df, metric_cols)
-        stats.drop(columns=stats.filter(like='_std').columns, axis=1, inplace=True)
+        stats.drop(columns=stats.filter(like='_std').columns, inplace=True)
 
         result_path = os.path.join(project_root, 'Results', f'{filename}.xlsx')
         scored_df.to_excel(result_path, index=False)
