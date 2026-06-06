@@ -127,7 +127,8 @@ Undervalued Stock Scanner\
 ├── Batch Processing\                  # Folder containing .bat files for simpler script execution in Windows
 └── requirements.txt                   # Required Python libraries
 ```
-**Note: The position statement CSV file in `\Position Statement\` is masked to ensure personal and financial information security. Hence, the output files in `\Exit Signals\` folder and `Exit Signals.pbix` do not reflect my real portfolio holdings.**
+**Note: The position statement CSV file in `\Position Statement\` is masked to ensure personal and financial information security. 
+Hence, the output files in `\Exit Signals\` folder and `Exit Signals.pbix` do not reflect my real portfolio holdings.**
 
 ## Usage
 
