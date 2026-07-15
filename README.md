@@ -102,7 +102,7 @@ The final output is a formatted Excel file saved in `\Exit Signals\Scannable\`.
 
 ## Project Folders and Files
 
-``\Undervalued Stock Scanner\`` contains the following folders and files:
+`\Undervalued Stock Scanner\` contains the following folders and files:
 
 ```bash
 Undervalued Stock Scanner\
@@ -148,8 +148,7 @@ Hence, the output files in `\Exit Signals\` folder and `Stock Monitor.pbix` do n
     From project terminal:
     ```
     py -m SCRIPTS.etl
-    py -m SCRIPTS.exit_signals
-    py -m SCRIPTS.stock_snapshot
+    py -m SCRIPTS.stock_database
     ```
 5. Open Power BI dashboard 
    - Open `Undervalued Stock Scanner.pbix` or `Exit Signals.pbix`
