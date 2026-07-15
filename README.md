@@ -20,9 +20,10 @@ Users can also generate Excel snapshots of the selected stocks and their metrics
 
 ## Framework Summary
 
-For detailed methodology, refer to:
+For detailed methodology, refer to the following files in `Documentation` folder:
 - `Conceptual Framework.pdf`
 - `Exit Signal Framework.pdf`
+- `Trend Analysis.pdf`
 
 ### Stock Fundamentals Screening
 
@@ -88,14 +89,16 @@ Refer to `Exit Signals.pdf` for detailed explanation and instructions.
 
 ### Pipeline for Exit Signals
 1. The position statement is downloaded from Thinkorswim and saved in `\Position Statement\`.
-2. `exit_signals.py` processes the position statement and raw data from `\Downloaded CSV Files\`, then applies exit signal logic and filters for stocks with at least 1 exit signal.
+2. `exit_signals.py` processes the position statement and the raw data from `\Downloaded CSV Files\`.
+It applies exit signal logic and filters for stocks with at least 1 exit signal.
 The final output is a formatted Excel file saved in `\Exit Signals\Scannable\`.
-3. Exit Signals.pbix presents categorized red flags.
+3. `Stock Monitor.pbix` ingests the formatted Excel report to categorize and display red flags.
 
-### Pipeline for Stock Snapshot
-1. stock_snapshot.py retrieves fundamental metrics across sectors and market caps.
-2. User inputs a list of selected stocks.
-3. Filtered Excel output is saved in `\Selected Stock Snapshots\`
+### Pipeline for Stock Database
+1. `stock_database.py` retrieves monthly fundamental metrics across all sectors and market caps, filtering specifically for currently held positions.
+2. The script appends metric data for a user-defined list of non-holding tickers of interest.
+3. All compiled data for holdings and watchlisted stocks is written to a local SQLite database, `my_database.db` (Note: This database is untracked and excluded from the repository via .gitignore)
+4. The script outputs a master flat file, `stock_data.csv`, which is consumed by `Stock Monitor.pbix` to enable historical trend analysis.
 
 ## Project Folders and Files
 
@@ -109,14 +112,13 @@ Undervalued Stock Scanner\
 ├── Industry Means\                    # Folder containing all industry mean calculation outputs (.xlsx files) from etl.py
 ├── Position Statement\                # Folder containing the current position statement (.csv file) downloaded from Thinkorswim
 ├── Exit Signals\                      # Folder containing exit signal output files exported from exit_signals.py
-├── Selected Stock Snapshots\          # Folder containing a sample snapshot of selected stocks and their metrics
 ├── SCRIPTS\                           # Package folder containing all Python scripts
 │   ├── etl.py                                     # Python script for scanning undervalued stocks
 │   ├── exit_signals.py                            # Python script for exit signals detection
-│   └── stock_snapshot.py                          # Python script that take snapshots of selected stocks and their metrics
+│   └── stock_database.py                          # Python script that stores stock data in SQLite database
 ├── POWER BI\                          # Folder containing dashboards
 │   ├── Undervalued Stocks Scanner.pbix            # Undervalued stock valuation dashboard
-│   └── Exit Signals.pbix                          # Exit monitoring dashboard
+│   └── Stock Monitor.pbix                         # Stock monitoring dashboard
 ├── Documentation\                     # Folder containing documents that explain the project in more details
 │   ├── Instructions.pdf                           # User instructions
 │   ├── Conceptual Framework.pdf                   # Detailed explanation of the project's logic and methodology
@@ -127,8 +129,8 @@ Undervalued Stock Scanner\
 ├── Batch Processing\                  # Folder containing .bat files for simpler script execution in Windows
 └── requirements.txt                   # Required Python libraries
 ```
-**Note: The position statement CSV file in `\Position Statement\` is masked to ensure personal and financial information security. 
-Hence, the output files in `\Exit Signals\` folder and `Exit Signals.pbix` do not reflect my real portfolio holdings.**
+**Note: The position statement CSV file in `\Position Statement\` and `stock_data.csv` are masked to ensure personal and financial information security. 
+Hence, the output files in `\Exit Signals\` folder and `Stock Monitor.pbix` do not reflect my real portfolio holdings.**
 
 ## Usage
 
