@@ -91,14 +91,18 @@ Refer to `Exit Signals.pdf` for detailed explanation and instructions.
 1. The position statement is downloaded from Thinkorswim and saved in `\Position Statement\`.
 2. `exit_signals.py` processes the position statement and the raw data from `\Downloaded CSV Files\`.
 It applies exit signal logic and filters for stocks with at least 1 exit signal.
-The final output is a formatted Excel file saved in `\Exit Signals\Scannable\`.
-3. `Stock Monitor.pbix` ingests the formatted Excel report to categorize and display red flags.
+The final output is a formatted Excel file saved in `\Exit Signals\Scannable\`.  
+3. Stocks that have dropped below the scanner's $250M market cap floor are now out-of-scanner.  
+They no longer receive fresh metrics from the scanner, so the exit-signal script can't evaluate them using current data.  
+The monthly-generated lists of these stocks are saved in `\Exit Signals\Unscannable\`.
+4. `Stock Monitor.pbix` ingests the current files in `\Exit Signals\` to categorize and display red flags.
 
 ### Pipeline for Stock Database
 1. `stock_database.py` retrieves monthly fundamental metrics across all sectors and market caps, filtering specifically for currently held positions.
 2. The script appends metric data for a user-defined list of non-holding tickers of interest.
 3. All compiled data for holdings and watchlisted stocks is written to a local SQLite database, `my_database.db` (Note: This database is untracked and excluded from the repository via .gitignore)
 4. The script outputs a master flat file, `stock_data.csv`, which is consumed by `Stock Monitor.pbix` to enable historical trend analysis.
+
 
 ## Project Folders and Files
 
